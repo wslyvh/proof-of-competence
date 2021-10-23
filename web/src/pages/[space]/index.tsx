@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react"
 import { GetStaticProps, GetStaticPaths } from 'next'
 import { ParsedUrlQuery } from 'querystring'
-import { DEFAULT_REVALIDATE_PERIOD } from "utils/constants"
+import { DEFAULT_COLOR_SCHEME, DEFAULT_REVALIDATE_PERIOD } from "utils/constants"
 import { Space, Task } from "types"
-import { Link } from "@chakra-ui/layout"
+import { Box, Center, Flex, Link, Square, StackDivider, VStack } from "@chakra-ui/layout"
+import { useColorModeValue ,Text, Heading, Button } from '@chakra-ui/react'
 import Verifier from "components/verifier"
 import { useWeb3React } from "@web3-react/core"
 import { verifyScore } from "utils/verify"
+import { StarIcon } from "@chakra-ui/icons"
+import TaskCard from "components/task"
 
 interface Props {
   space: Space
@@ -20,6 +23,7 @@ export default function SpacePage(props: Props) {
   const [score, setScore] = useState(0)
   const web3 = useWeb3React()
   const space = props.space
+  const maxScore = space.tasks.map(i => i.points).reduce((acc, i) => acc + i, 0)
 
   useEffect(() => {
     async function getScore() {
@@ -42,37 +46,43 @@ export default function SpacePage(props: Props) {
 
   return <>
     <div>
-      <section>
-        <h2>{space.name}</h2>
-        <p>{space.description}</p>
-        {space.website && 
-        <p>
-            <Link href={space.website} isExternal>{space.website}</Link>
-        </p>
-        }
-        {space.twitter && 
-        <p>
-            <Link href={`https://twitter.com/${space.twitter}`} isExternal>@{space.twitter}</Link>
-        </p>
-        }
-      </section>
+      <Box as='section' p='8' borderRadius="xl" bg={useColorModeValue('gray.300', 'gray.700')}>
+        <Heading as="h2" mb='4'>{space.name}</Heading>
+        <Text fontSize="xl">{space.description}</Text>
+        
+        <Flex alignItems='center'>
+          <Link href={space.website} isExternal 
+            _hover={{ textDecoration: 'none'}} _focus={{ textDecoration: 'none'}}>
+            <Button size="lg" colorScheme={DEFAULT_COLOR_SCHEME} mt="24px">
+              Website
+            </Button>
+          </Link>
 
-      <br/><hr/><br/>
+          <Link href={`https://twitter.com/${space.twitter}`} isExternal ml={4}
+            _hover={{ textDecoration: 'none'}} _focus={{ textDecoration: 'none'}}>
+            <Button size="lg" mt="24px">
+              @{space.twitter}
+            </Button>
+          </Link>
+        </Flex>
+      </Box>
 
-      <div>Your score: {score}</div>
+      <Center as='section' h="100px" my={8} borderRadius="xl"
+        bg={useColorModeValue(`${DEFAULT_COLOR_SCHEME}.500`, `${DEFAULT_COLOR_SCHEME}.200`)} 
+        color={useColorModeValue('white', 'black')}>
+          <StarIcon mr={2} />
+          <Text fontSize="xl">Score {score} / {maxScore}</Text>
+      </Center>
 
-      <br/><hr/><br/>
+      <VStack as='section'
+        spacing={4}
+        align="stretch">
+        <Heading as="h3" size='lg'>Tasks</Heading>
 
-      <section>
         {space.tasks.map((task: Task, index: number) => {
-          return <div key={`${task.verifier}_${index}`}>
-              <p>{task.name} ({task.points} points)</p>
-              <p>{task.description}</p>
-              <Verifier task={task} address={web3.account} />
-              <hr/>
-            </div>
+          return <TaskCard key={`${task.verifier}_${index}`} task={task} address={web3.account} />
         })}
-      </section>
+        </VStack>
     </div>
   </>
 }
@@ -110,25 +120,24 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (context) => 
     },
     {
       name: 'Original Gangster',
-      description: "Show-off time! Score points for every month since your first transaction.",
+      description: "Score points for every month since your first transaction.",
       points: 10,
-      verifier: 'first-transaction',
-      chainId: 1
+      verifier: 'first-transaction'
     },
     {
       name: 'Who dis?!',
-      description: 'Register your ENS name at https://ens.domains/ and set the reverse lookup to your address.',
+      description: 'Register your ENS name at https://ens.domains/ with a reverse lookup.',
       points: 100,
       verifier: 'ens-reverse-lookup'
     },
     {
-      name: 'Who dis?!',
+      name: 'Time to shine!',
       description: 'After registering your ENS name, set up your avatar to show off your NFT.',
       points: 200,
       verifier: 'ens-avatar'
     },
     {
-      name: 'With the training wheels',
+      name: 'Training wheels',
       description: 'Deploy any kind of contract to the Rinkeby test network.',
       points: 20,
       verifier: 'deployed-contract',
@@ -136,13 +145,20 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (context) => 
     },
     {
       name: 'Tests, tests everywhere',
-      description: 'Deploy any kind of contract to the Rinkeby test network.',
+      description: 'Deploy any kind of contract to the Ropsten test network.',
       points: 20,
       verifier: 'deployed-contract',
       chainId: 4
     },
     {
-      name: 'Testing in prod',
+      name: 'Master of chains',
+      description: 'Deploy any kind of contract to the Goerli test network.',
+      points: 20,
+      verifier: 'deployed-contract',
+      chainId: 5
+    },
+    {
+      name: 'Test in production',
       description: 'Deploy any kind of contract to mainnet.',
       points: 250,
       verifier: 'deployed-contract'
@@ -155,7 +171,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (context) => 
       chainId: 10
     },
     {
-      name: 'Need more scale',
+      name: 'Scaling out',
       description: 'Deploy any kind of contract to the Arbitrum L2 network.',
       points: 500,
       verifier: 'deployed-contract',

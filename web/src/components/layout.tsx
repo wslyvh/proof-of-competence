@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { Center, Link, useColorModeValue } from '@chakra-ui/react'
+import { Box, Center, Container, Link, useColorModeValue } from '@chakra-ui/react'
 import Header from './header'
 
 type Props = {
@@ -11,9 +11,9 @@ export function Layout(props: Props) {
     <div>
       <Header />
 
-      <div>
+      <Container maxW="container.md" py='8'>
         {props.children}
-      </div>
+      </Container>
 
       <Center as="footer" bg={useColorModeValue('gray.300', 'gray.700')} p={6}>
         <p>
