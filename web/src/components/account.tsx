@@ -1,8 +1,8 @@
 import React from 'react'
-import { Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Center, Link, useClipboard, Avatar, Flex, Box } from '@chakra-ui/react'
+import { Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Center, Link, useClipboard, Avatar, Flex, Box, Badge } from '@chakra-ui/react'
 import { useWeb3React } from '@web3-react/core'
 import { useInitialConnect } from 'hooks/useInitialConnect'
-import { injected, formatAddress, formatEtherscanLink, getNetworkName } from 'utils/web3'
+import { injected, formatAddress, formatEtherscanLink, getNetworkName, getNetworkColor } from 'utils/web3'
 import { UserRejectedRequestError } from '@web3-react/injected-connector'
 import { DEFAULT_COLOR_SCHEME } from 'utils/constants'
 import { SmallCloseIcon, CopyIcon, ExternalLinkIcon } from '@chakra-ui/icons'
@@ -41,6 +41,8 @@ export function Account() {
       {web3Connect.active && typeof web3Connect.account === 'string' && typeof web3Connect.chainId === 'number' && 
         <>
         <Menu>
+          {web3Connect.chainId > 1 && <Badge mr={4} colorScheme={getNetworkColor(web3Connect.chainId)} variant="outline">{getNetworkName(web3Connect.chainId)}</Badge>}
+          
           <MenuButton as={Button}>
             <Flex alignItems='center'>
               <Box mr={4}><Avatar name={avatar.name} src={avatar.url} size='xs' /></Box>
@@ -58,7 +60,7 @@ export function Account() {
             </Center>
 
             <Center mb={4}>
-              <small>{getNetworkName(web3Connect.chainId)}</small>
+              <Badge colorScheme={getNetworkColor(web3Connect.chainId)} variant="outline">{getNetworkName(web3Connect.chainId)}</Badge>
             </Center>
 
             <MenuDivider />

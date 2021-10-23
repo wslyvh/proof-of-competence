@@ -16,9 +16,40 @@ export function formatAddress(value: string, length: number = 4) {
     return `${value.substring(0, length + 2)}...${value.substring(value.length - length)}`
 }
 
+export function getNetworkColor(chainId: number) {
+    switch (chainId) {
+        case 1: {
+            return 'teal'
+        }
+        case 3: { // Ropsten
+            return 'pink'
+        }
+        case 4: { // Rinkeby
+            return 'yellow'
+        }
+        case 5: { // Goerli
+            return 'blue'
+        }
+        case 10: { // Optmistic
+            return 'red'
+        }
+        case 42: { // Kovan
+            return 'purple'
+        }
+        case 42161: { // Arbitrum
+            return 'cyan'
+        }
+        default: {
+            return 'grey'
+        }
+    }
+}
+
 export function getNetworkName(chainId: number) {
-    const name = getNetwork(chainId).name
-    if (name === 'homestead') return 'mainnet'
+    let name = getNetwork(chainId)?.name
+    if (!name || name === 'homestead') return 'mainnet'
+    if (chainId === 10) name = 'optimistic'
+    if (chainId === 42161) name = 'arbitrum'
     
     return name
 }

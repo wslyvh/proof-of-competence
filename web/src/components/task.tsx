@@ -6,6 +6,7 @@ import  React, { useEffect, useState } from 'react'
 import { Task } from 'types'
 import { verifyScore } from 'utils/verify'
 import Linkify from 'react-linkify'
+import { getNetworkColor, getNetworkName } from 'utils/web3'
 
 interface Props {
     task: Task
@@ -37,13 +38,15 @@ export default function TaskCard(props: Props) {
                     {result === undefined && ''}
             </Square>
 
-            <Box flex="1" ml={4} padding={4}>
+            <Box flex="1" ml={4} padding={3}>
                 <Heading fontSize="xl">
                     {task.name} ({task.points} points) 
                     {typeof result === 'boolean' && result === true && <Badge colorScheme="teal" ml={2} p={1}>completed</Badge>}
-                    {typeof result === 'number' && result > 0 && <Badge colorScheme="teal" ml={2} p={1} variant="outline">in progress</Badge>}
+                    {typeof result === 'number' && result > 0 && <Badge colorScheme="teal" ml={2} p={1}>in progress</Badge>}
+                    {!result && <Badge colorScheme={getNetworkColor(task.chainId ?? 1)} ml={2} p={1} variant="outline">{getNetworkName(task.chainId ?? 1)}</Badge>}
                 </Heading>
-                <Text mt={4}>
+                
+                <Text mt={2}>
                     <Linkify componentDecorator={(decoratedHref, decoratedText, key) => (
                         <Link key={key} isExternal textDecoration='underline' href={decoratedHref}>{decoratedText}</Link>)}>
                         {task.description}
