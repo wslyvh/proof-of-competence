@@ -26,12 +26,11 @@ export default function SpacePage(props: Props) {
       let score = 0
       await Promise.all(space.tasks.map(async (task: Task) => {
         const result = await verifyScore(task, web3.account)
-
         if (result && typeof result === 'boolean') {
           score += task.points
         }
         if (result && typeof result === 'number') {
-          score += task.points * result
+          score += result
         }
       }))
 
@@ -110,10 +109,23 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (context) => 
       verifier: 'active-address'
     },
     {
+      name: 'Original Gangster',
+      description: "Show-off time! Score points for every month since your first transaction.",
+      points: 10,
+      verifier: 'first-transaction',
+      chainId: 1
+    },
+    {
       name: 'Who dis?!',
       description: 'Register your ENS name at https://ens.domains/ and set the reverse lookup to your address.',
       points: 100,
       verifier: 'ens-reverse-lookup'
+    },
+    {
+      name: 'Who dis?!',
+      description: 'After registering your ENS name, set up your avatar to show off your NFT.',
+      points: 200,
+      verifier: 'ens-avatar'
     },
     {
       name: 'With the training wheels',
