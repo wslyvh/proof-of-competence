@@ -9,7 +9,7 @@ export async function verify(task: Task, address: string): Promise<boolean | num
         const data = await history.json()
         if (data.message !== 'OK') return false
 
-        return data.result.some(tx => !tx.to && tx.contractAddress)
+        return data.result.some((tx: any) => !tx.to && tx.contractAddress)
     }
     catch(e) {
         return false

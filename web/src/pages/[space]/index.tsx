@@ -21,15 +21,19 @@ interface Params extends ParsedUrlQuery {
 
 export default function SpacePage(props: Props) {
   const [score, setScore] = useState(0)
+  const bgBox = useColorModeValue('gray.300', 'gray.700')
+  const bgCenter = useColorModeValue(`${DEFAULT_COLOR_SCHEME}.500`, `${DEFAULT_COLOR_SCHEME}.200`)
+  const colorCenter = useColorModeValue('white', 'black')
+  
   const web3 = useWeb3React()
   const space = props.space
 
   useEffect(() => {
     async function getScore() {
       let score = 0
-      if (!space) return
+      if (!props.space) return
 
-      await Promise.all(space.tasks.map(async (task: Task) => {
+      await Promise.all(props.space.tasks.map(async (task: Task) => {
         const result = await verifyScore(task, web3.account)
         if (result && typeof result === 'boolean') {
           score += task.points
@@ -51,7 +55,7 @@ export default function SpacePage(props: Props) {
 
   return <>
     <div>
-      <Box as='section' p='8' borderRadius="xl" bg={useColorModeValue('gray.300', 'gray.700')}>
+      <Box as='section' p='8' borderRadius="xl" bg={bgBox}>
         <Heading as="h2" mb='4'>{space.name}</Heading>
         <Text fontSize="xl">{space.description}</Text>
         
@@ -73,8 +77,8 @@ export default function SpacePage(props: Props) {
       </Box>
 
       <Center as='section' h="100px" my={8} borderRadius="xl"
-        bg={useColorModeValue(`${DEFAULT_COLOR_SCHEME}.500`, `${DEFAULT_COLOR_SCHEME}.200`)} 
-        color={useColorModeValue('white', 'black')}>
+        bg={bgCenter} 
+        color={colorCenter}>
           <StarIcon mr={2} />
           <Text fontSize="xl">Score {score} / {maxScore}</Text>
       </Center>

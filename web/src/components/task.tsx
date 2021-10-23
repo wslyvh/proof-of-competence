@@ -25,7 +25,7 @@ export default function TaskCard(props: Props) {
         }
 
         verify()
-    }, [props.address])
+    }, [props.task, props.address, web3.account])
 
     return (
         <Flex>
@@ -40,7 +40,8 @@ export default function TaskCard(props: Props) {
             <Box flex="1" ml={4} padding={4}>
                 <Heading fontSize="xl">
                     {task.name} ({task.points} points) 
-                    {(result && result === true) || (result && result > 0) && <Badge colorScheme="teal">completed</Badge>}
+                    {typeof result === 'boolean' && result === true && <Badge colorScheme="teal" ml={2} p={1}>completed</Badge>}
+                    {typeof result === 'number' && result > 0 && <Badge colorScheme="teal" ml={2} p={1} variant="outline">in progress</Badge>}
                 </Heading>
                 <Text mt={4}>
                     <Linkify componentDecorator={(decoratedHref, decoratedText, key) => (
