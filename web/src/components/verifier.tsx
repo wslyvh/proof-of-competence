@@ -14,7 +14,7 @@ export default function Verifier(props: Props) {
 
     useEffect(() => {
         async function verify() {
-            const result = await verifyScore(props.task, web3.library, web3.account)
+            const result = await verifyScore(props.task, web3.account)
 
             setResult(result)
         }

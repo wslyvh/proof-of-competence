@@ -5,7 +5,7 @@ import { BigNumberish } from "@ethersproject/bignumber";
 import { formatUnits } from "@ethersproject/units";
 
 export const injected = new InjectedConnector({
-    supportedChainIds: [1, 3, 4, 5, 42]
+    supportedChainIds: [1, 3, 4, 5, 10, 42, 42161]
 })
 
 export function getProvider(provider: ExternalProvider | JsonRpcFetchFunc) {
@@ -32,6 +32,25 @@ export function formatEtherscanLink(type: 'Account' | 'Transaction', value: stri
         }
         case 'Transaction': {
             return `https://${networkName}etherscan.io/tx/${value}`
+        }
+    }
+}
+
+export function getEtherscanBaseApiUri(chainId: number = 1) {
+    const networkName = getNetwork(chainId).name
+
+    switch (chainId) {
+        case 1: {
+            return `https://api.etherscan.io/api`
+        }
+        case 10: {
+            return `https://api-optimistic.etherscan.io/api`
+        }
+        case 42161: {
+            return `https://api.arbiscan.io/api`
+        }
+        default: {
+            return `https://api-${networkName}.etherscan.io/api`
         }
     }
 }

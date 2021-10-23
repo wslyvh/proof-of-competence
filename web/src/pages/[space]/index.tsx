@@ -25,7 +25,7 @@ export default function SpacePage(props: Props) {
     async function getScore() {
       let score = 0
       await Promise.all(space.tasks.map(async (task: Task) => {
-        const result = await verifyScore(task, web3.library, web3.account)
+        const result = await verifyScore(task, web3.account)
 
         if (result && typeof result === 'boolean') {
           score += task.points
@@ -65,8 +65,8 @@ export default function SpacePage(props: Props) {
       <br/><hr/><br/>
 
       <section>
-        {space.tasks.map((task: Task) => {
-          return <div key={task.verifier}>
+        {space.tasks.map((task: Task, index: number) => {
+          return <div key={`${task.verifier}_${index}`}>
               <p>{task.name} ({task.points} points)</p>
               <p>{task.description}</p>
               <Verifier task={task} address={web3.account} />
@@ -104,25 +104,50 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (context) => 
     website: 'useweb3.xyz',
     twitter: 'useWeb3',
     tasks: [{
-      name: 'Install an Ethereum wallet',
+      name: "Let's get it started!",
       description: 'Visit https://ethereum.org/wallets and install a wallet to start your journey.',
       points: 100,
       verifier: 'active-address'
-    },{
-      name: 'Register ENS name',
+    },
+    {
+      name: 'Who dis?!',
       description: 'Register your ENS name at https://ens.domains/ and set the reverse lookup to your address.',
       points: 100,
       verifier: 'ens-reverse-lookup'
-    },{
-      name: 'True task',
-      description: 'Task always verifies true for testing purposes.',
-      points: 10,
-      verifier: 'true'
-    },{
-      name: 'False task',
-      description: 'Task always verifies false for testing purposes.',
-      points: 10,
-      verifier: 'false'
+    },
+    {
+      name: 'With the training wheels',
+      description: 'Deploy any kind of contract to the Rinkeby test network.',
+      points: 20,
+      verifier: 'deployed-contract',
+      chainId: 3
+    },
+    {
+      name: 'Tests, tests everywhere',
+      description: 'Deploy any kind of contract to the Rinkeby test network.',
+      points: 20,
+      verifier: 'deployed-contract',
+      chainId: 4
+    },
+    {
+      name: 'Testing in prod',
+      description: 'Deploy any kind of contract to mainnet.',
+      points: 250,
+      verifier: 'deployed-contract'
+    },
+    {
+      name: 'Getting optimistic',
+      description: 'Deploy any kind of contract to the Optmistic L2 network.',
+      points: 500,
+      verifier: 'deployed-contract',
+      chainId: 10
+    },
+    {
+      name: 'Need more scale',
+      description: 'Deploy any kind of contract to the Arbitrum L2 network.',
+      points: 500,
+      verifier: 'deployed-contract',
+      chainId: 42161
     }] as Array<Task>
   } as Space
 

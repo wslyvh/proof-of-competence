@@ -1,9 +1,10 @@
-import { Provider } from '@ethersproject/providers'
-import { ethers } from 'ethers'
+import { InfuraProvider } from '@ethersproject/providers'
+import { Task } from 'types'
 
-export async function verify(provider: Provider, address: string): Promise<boolean | number>
+export async function verify(task: Task, address: string): Promise<boolean | number>
 {
     try { 
+        const provider = new InfuraProvider(task.chainId || 1)
         const name = await provider.lookupAddress(address)
         return !!name
     }

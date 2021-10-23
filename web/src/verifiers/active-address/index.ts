@@ -1,6 +1,6 @@
-import { Provider } from "@ethersproject/providers";
+import { Task } from "types"
 
-export async function verify(provider: Provider, address: string): Promise<boolean | number>
+export async function verify(task: Task, address: string): Promise<boolean | number>
 {
     return !!address
 }
