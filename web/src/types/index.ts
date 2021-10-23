@@ -14,3 +14,7 @@ export interface Task {
     chainId?: number
     verifier: string
 }
+
+export interface Verifier {
+    verify(task: Task, address: string): Promise<boolean | number>
+}

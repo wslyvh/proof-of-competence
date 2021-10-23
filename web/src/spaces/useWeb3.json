@@ -29,14 +29,14 @@
     },
     {
         "name": "Training wheels",
-        "description": "Deploy any kind of contract to the Rinkeby test network.",
+        "description": "Deploy any kind of contract to the Ropsten test network.",
         "points": 20,
         "verifier": "deployed-contract",
         "chainId": 3
     },
     {
         "name": "Tests, tests everywhere",
-        "description": "Deploy any kind of contract to the Ropsten test network.",
+        "description": "Deploy any kind of contract to the Rinkeby test network.",
         "points": 20,
         "verifier": "deployed-contract",
         "chainId": 4

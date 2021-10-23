@@ -25,7 +25,7 @@ export default function TaskCard(props: Props) {
         }
 
         verify()
-    }, [props])
+    }, [props.address])
 
     return (
         <Flex>
