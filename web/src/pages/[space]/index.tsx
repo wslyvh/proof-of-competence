@@ -112,7 +112,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (context) => 
     }
   }
 
-  const space = getSpaces().find(i => i.name.toLowerCase() === spaceName.toLowerCase())
+  const space = getSpaces().find(i => i.id.toLowerCase() === spaceName.toLowerCase())
   if (!space) {
     return {
       props: null,
