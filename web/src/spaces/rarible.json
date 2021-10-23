@@ -13,7 +13,7 @@
         "name": "$RARI token",
         "description": "Buy and hold any amount of $RARI tokens in your wallet.",
         "points": 100,
-        "verifier": "test-always-true"
+        "verifier": "active-address"
     },
     {
         "name": "Create collectible(s)",
@@ -37,6 +37,6 @@
         "name": "Rarible OG",
         "description": "Extra points if you've bought any collectible(s) more than 1 year ago",
         "points": 1000,
-        "verifier": "test-always-true"
+        "verifier": "active-address"
     }]
 }
