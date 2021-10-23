@@ -31,7 +31,7 @@
         "name": "Deposit any asset",
         "description": "Deposit any asset onto the Aave protocol at https://app.aave.com/#/deposit",
         "points": 250,
-        "verifier": "test-always-true"
+        "verifier": "active-address"
     },
     {
         "name": "Borrow any asset",
