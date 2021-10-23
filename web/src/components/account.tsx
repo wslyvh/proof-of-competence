@@ -1,16 +1,18 @@
 import React from 'react'
-import { Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Center, Link, useClipboard } from '@chakra-ui/react'
+import { Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Center, Link, useClipboard, Avatar, Flex, Box } from '@chakra-ui/react'
 import { useWeb3React } from '@web3-react/core'
 import { useInitialConnect } from 'hooks/useInitialConnect'
 import { injected, formatAddress, formatEtherscanLink, getNetworkName } from 'utils/web3'
 import { UserRejectedRequestError } from '@web3-react/injected-connector'
 import { DEFAULT_COLOR_SCHEME } from 'utils/constants'
 import { SmallCloseIcon, CopyIcon, ExternalLinkIcon } from '@chakra-ui/icons'
+import { useAvatar } from 'hooks/useAvatar'
 
 export function Account() {
   useInitialConnect()
   const web3Connect = useWeb3React()
-  const { hasCopied, onCopy } = useClipboard(web3Connect.account ?? '')
+  const avatar = useAvatar()
+  const { onCopy } = useClipboard(web3Connect.account ?? '')
 
   function connect() {
     web3Connect.activate(injected, (error) => {
@@ -40,10 +42,17 @@ export function Account() {
         <>
         <Menu>
           <MenuButton as={Button}>
-            <span>{formatAddress(web3Connect.account)}</span>
+            <Flex alignItems='center'>
+              <Box mr={4}><Avatar name={avatar.name} src={avatar.url} size='xs' /></Box>
+              <Box>{avatar.name || formatAddress(web3Connect.account)}</Box>
+            </Flex>
           </MenuButton>
 
           <MenuList alignItems={'center'}>
+            <Center my={4}>
+              <Avatar size={'2xl'} name={avatar.name} src={avatar.url} />
+            </Center>
+
             <Center mt={4}>
               <p>{formatAddress(web3Connect.account, 6)}</p>
             </Center>
