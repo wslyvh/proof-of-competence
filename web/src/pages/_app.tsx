@@ -4,7 +4,6 @@ import { Web3ReactProvider } from '@web3-react/core'
 import { SEO } from 'components/seo'
 import { getProvider } from 'utils/web3'
 import { Layout } from 'components/layout'
-import 'styles/globals.css'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

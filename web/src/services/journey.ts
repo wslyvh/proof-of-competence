@@ -1,11 +1,11 @@
 
 import fs from 'fs'
 import { join } from 'path'
-import { Space } from 'types'
+import { Journey } from 'types'
 
-const baseFolder = 'src/spaces'
+const baseFolder = 'src/journeys'
 
-export function getSpaceNames(): Array<string> {
+export function getJourneyNames(): Array<string> {
     const dir = join(process.cwd(), baseFolder)
     const dirs = fs.readdirSync(dir, { withFileTypes: true })
         .filter(i => i.isFile() && i.name.endsWith('.json'))
@@ -14,7 +14,7 @@ export function getSpaceNames(): Array<string> {
     return dirs
 }
 
-export function getSpaces(): Array<Space> {
+export function getJourneys(): Array<Journey> {
     const dir = join(process.cwd(), baseFolder)
     const files = fs.readdirSync(dir, { withFileTypes: true })
         .filter(i => i.isFile() && i.name.endsWith('.json'))
@@ -27,13 +27,13 @@ export function getSpaces(): Array<Space> {
         }
         
         if (content) {
-            let space = JSON.parse(content) as Space 
+            let journey = JSON.parse(content) as Journey 
             return {
-                ...space,
+                ...journey,
                 id: i.name.replace('.json', '')
             }
         }
-    }).filter(i => !!i) as Array<Space> 
+    }).filter(i => !!i) as Array<Journey> 
     
     return items
 }

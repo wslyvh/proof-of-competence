@@ -1,4 +1,4 @@
-export interface Space {
+export interface Journey {
     id: string
     name: string
     description: string

@@ -2,12 +2,12 @@ import { VStack, Heading, Box, LinkOverlay, LinkBox } from "@chakra-ui/layout"
 import { Text, useColorModeValue } from '@chakra-ui/react'
 import { GetStaticProps } from "next"
 import React from "react"
-import { getSpaces } from "services/spaces"
-import { Space } from "types"
+import { getJourneys } from "services/journey"
+import { Journey } from "types"
 import { DEFAULT_REVALIDATE_PERIOD, DESCRIPTION } from "utils/constants"
 
 interface Props {
-  spaces: Array<Space>
+  journeys: Array<Journey>
 }
 
 export default function HomePage(props: Props) {
@@ -19,17 +19,17 @@ export default function HomePage(props: Props) {
     <VStack as='section'
       spacing={4}
       align="stretch">
-      <Heading as="h3" size='lg'>Pathways</Heading>
+      <Heading as="h3" size='lg'>Explore</Heading>
 
-      {props.spaces.map((space: Space) => {
+      {props.journeys.map((journey: Journey) => {
         return (
-          <LinkBox key ={space.id} my={4} p={4} borderWidth="1px" borderRadius="lg" overflow="hidden">
+          <LinkBox key ={journey.id} my={4} p={4} borderWidth="1px" borderRadius="lg" overflow="hidden">
             <Heading fontSize='xl'>
-              <LinkOverlay href={`/${space.id}`}>
-                {space.name}
+              <LinkOverlay href={`/${journey.id}`}>
+                {journey.name}
               </LinkOverlay>
             </Heading>
-            <Text mt={4}>{space.description}</Text>
+            <Text mt={4}>{journey.description}</Text>
           </LinkBox>
         )})
       }
@@ -38,11 +38,11 @@ export default function HomePage(props: Props) {
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const spaces = getSpaces()
+  const journeys = getJourneys()
   
   return {
     props: {
-      spaces
+      journeys
     },
     revalidate: DEFAULT_REVALIDATE_PERIOD
   }
