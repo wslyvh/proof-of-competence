@@ -103,7 +103,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths: spaces.map(i => {
       return { params: { space: 'useWeb3' } }
     }),
-    fallback: true
+    fallback: false
   }
 }
 
