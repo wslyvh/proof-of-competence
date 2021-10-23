@@ -1,4 +1,4 @@
-import { CheckCircleIcon, CheckIcon, SmallCloseIcon } from '@chakra-ui/icons'
+import { CheckIcon, SmallCloseIcon } from '@chakra-ui/icons'
 import { Flex, Square, Box, Heading, Badge } from '@chakra-ui/layout'
 import { Link, Text, useColorModeValue } from '@chakra-ui/react'
 import { useWeb3React } from '@web3-react/core'

@@ -3,13 +3,13 @@ import { GetStaticProps, GetStaticPaths } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import { DEFAULT_COLOR_SCHEME, DEFAULT_REVALIDATE_PERIOD } from "utils/constants"
 import { Space, Task } from "types"
-import { Box, Center, Flex, Link, Square, StackDivider, VStack } from "@chakra-ui/layout"
+import { Box, Center, Flex, Link, VStack } from "@chakra-ui/layout"
 import { useColorModeValue ,Text, Heading, Button } from '@chakra-ui/react'
-import Verifier from "components/verifier"
 import { useWeb3React } from "@web3-react/core"
 import { verifyScore } from "utils/verify"
 import { StarIcon } from "@chakra-ui/icons"
 import TaskCard from "components/task"
+import { getSpaceNames, getSpaces } from "services/spaces"
 
 interface Props {
   space: Space
@@ -23,11 +23,12 @@ export default function SpacePage(props: Props) {
   const [score, setScore] = useState(0)
   const web3 = useWeb3React()
   const space = props.space
-  const maxScore = space.tasks.map(i => i.points).reduce((acc, i) => acc + i, 0)
 
   useEffect(() => {
     async function getScore() {
       let score = 0
+      if (!space) return
+
       await Promise.all(space.tasks.map(async (task: Task) => {
         const result = await verifyScore(task, web3.account)
         if (result && typeof result === 'boolean') {
@@ -43,6 +44,10 @@ export default function SpacePage(props: Props) {
 
     getScore()
   }, [props.space, web3.account])
+
+  if (!space) return null
+  
+  const maxScore = space.tasks.map(i => i.points).reduce((acc, i) => acc + i, 0)
 
   return <>
     <div>
@@ -88,10 +93,12 @@ export default function SpacePage(props: Props) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const spaces = getSpaceNames()
+  
   return {
-    paths: [
-      { params: { space: 'useWeb3' } }
-    ],
+    paths: spaces.map(i => {
+      return { params: { space: 'useWeb3' } }
+    }),
     fallback: true
   }
 }
@@ -105,80 +112,14 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (context) => 
     }
   }
 
-  // const space = service.GetSpace(spaceName)
-
-  const space = {
-    name: 'useWeb3',
-    description: 'Onboarding new developers into the Web3 space',
-    website: 'useweb3.xyz',
-    twitter: 'useWeb3',
-    tasks: [{
-      name: "Let's get it started!",
-      description: 'Visit https://ethereum.org/wallets and install a wallet to start your journey.',
-      points: 100,
-      verifier: 'active-address'
-    },
-    {
-      name: 'Original Gangster',
-      description: "Score points for every month since your first transaction.",
-      points: 10,
-      verifier: 'first-transaction'
-    },
-    {
-      name: 'Who dis?!',
-      description: 'Register your ENS name at https://ens.domains/ with a reverse lookup.',
-      points: 100,
-      verifier: 'ens-reverse-lookup'
-    },
-    {
-      name: 'Time to shine!',
-      description: 'After registering your ENS name, set up your avatar to show off your NFT.',
-      points: 200,
-      verifier: 'ens-avatar'
-    },
-    {
-      name: 'Training wheels',
-      description: 'Deploy any kind of contract to the Rinkeby test network.',
-      points: 20,
-      verifier: 'deployed-contract',
-      chainId: 3
-    },
-    {
-      name: 'Tests, tests everywhere',
-      description: 'Deploy any kind of contract to the Ropsten test network.',
-      points: 20,
-      verifier: 'deployed-contract',
-      chainId: 4
-    },
-    {
-      name: 'Master of chains',
-      description: 'Deploy any kind of contract to the Goerli test network.',
-      points: 20,
-      verifier: 'deployed-contract',
-      chainId: 5
-    },
-    {
-      name: 'Test in production',
-      description: 'Deploy any kind of contract to mainnet.',
-      points: 250,
-      verifier: 'deployed-contract'
-    },
-    {
-      name: 'Getting optimistic',
-      description: 'Deploy any kind of contract to the Optmistic L2 network.',
-      points: 500,
-      verifier: 'deployed-contract',
-      chainId: 10
-    },
-    {
-      name: 'Scaling out',
-      description: 'Deploy any kind of contract to the Arbitrum L2 network.',
-      points: 500,
-      verifier: 'deployed-contract',
-      chainId: 42161
-    }] as Array<Task>
-  } as Space
-
+  const space = getSpaces().find(i => i.name.toLowerCase() === spaceName.toLowerCase())
+  if (!space) {
+    return {
+      props: null,
+      notFound: true,
+    }
+  }
+  
   return {
     props: {
       space
