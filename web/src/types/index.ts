@@ -1,6 +1,7 @@
 export interface Journey {
     id: string
     name: string
+    version: number
     description: string
     website?: string
     twitter?: string

@@ -1,5 +1,6 @@
 {
     "name": "Rarible protocol",
+    "version": 1,
     "description": "Simplifying the go-to-market process for NFT projects and ideas.",
     "website": "https://rarible.org/",
     "twitter": "raribledao",

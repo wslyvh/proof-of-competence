@@ -22,6 +22,7 @@
     "@web3-react/core": "^6.1.9",
     "@web3-react/injected-connector": "^6.0.7",
     "ethereum-blockies-base64": "^1.0.2",
+    "ethers": "^5.5.0",
     "framer-motion": "^4",
     "moment": "^2.29.1",
     "next": "11.1.2",
