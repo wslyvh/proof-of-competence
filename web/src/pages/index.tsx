@@ -2,6 +2,7 @@ import { VStack, Heading, Box, LinkOverlay, LinkBox } from "@chakra-ui/layout"
 import { Text } from '@chakra-ui/react'
 import { GetStaticProps } from "next"
 import React from "react"
+import NextLink from "next/link"
 import { getJourneys } from "services/journey"
 import { Journey } from "types"
 import { DEFAULT_REVALIDATE_PERIOD, DESCRIPTION } from "utils/constants"
@@ -23,11 +24,13 @@ export default function HomePage(props: Props) {
 
       {props.journeys.map((journey: Journey) => {
         return (
-          <LinkBox key ={journey.id} my={4} p={4} borderWidth="1px" borderRadius="lg" overflow="hidden">
+          <LinkBox key={journey.id} as='article' my={4} p={4} borderWidth="1px" borderRadius="lg" overflow="hidden">
             <Heading fontSize='xl'>
-              <LinkOverlay href={`/${journey.id}`}>
-                {journey.name}
-              </LinkOverlay>
+              <NextLink href={`/${journey.id}`} passHref>
+                <LinkOverlay>
+                  {journey.name}
+                </LinkOverlay>
+              </NextLink>
             </Heading>
             <Text mt={4}>{journey.description}</Text>
           </LinkBox>

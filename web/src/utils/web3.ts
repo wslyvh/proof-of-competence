@@ -3,9 +3,20 @@ import { ExternalProvider, getNetwork, JsonRpcFetchFunc } from "@ethersproject/p
 import { Web3Provider } from "@ethersproject/providers"
 import { BigNumberish } from "@ethersproject/bignumber";
 import { formatUnits } from "@ethersproject/units";
+import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 
 export const injected = new InjectedConnector({
     supportedChainIds: [1, 3, 4, 5, 10, 42, 42161]
+})
+
+export const walletConnectConnector = new WalletConnectConnector({ 
+    rpc: { 
+        1: 'https://mainnet.infura.io/v3/d75dedf8365a48e1bbb78a7fa8b83faa',
+        3: 'https://ropsten.infura.io/v3/d75dedf8365a48e1bbb78a7fa8b83faa',
+        4: 'https://rinkeby.infura.io/v3/d75dedf8365a48e1bbb78a7fa8b83faa',
+        5: 'https://goerli.infura.io/v3/d75dedf8365a48e1bbb78a7fa8b83faa',
+        42: 'https://kovan.infura.io/v3/d75dedf8365a48e1bbb78a7fa8b83faa',
+    } 
 })
 
 export function getProvider(provider: ExternalProvider | JsonRpcFetchFunc) {

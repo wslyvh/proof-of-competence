@@ -2,10 +2,10 @@ import React from 'react'
 import { Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Center, Link, useClipboard, Avatar, Flex, Box, Badge } from '@chakra-ui/react'
 import { useWeb3React } from '@web3-react/core'
 import { useInitialConnect } from 'hooks/useInitialConnect'
-import { injected, formatAddress, formatEtherscanLink, getNetworkName, getNetworkColor } from 'utils/web3'
+import { injected, formatAddress, formatEtherscanLink, getNetworkName, getNetworkColor, walletConnectConnector } from 'utils/web3'
 import { UserRejectedRequestError } from '@web3-react/injected-connector'
 import { DEFAULT_COLOR_SCHEME } from 'utils/constants'
-import { SmallCloseIcon, CopyIcon, ExternalLinkIcon } from '@chakra-ui/icons'
+import { SmallCloseIcon, CopyIcon, ExternalLinkIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import { useAvatar } from 'hooks/useAvatar'
 
 export function Account() {
@@ -24,6 +24,16 @@ export function Account() {
     }, false)
   }
 
+  function walletConnect() {
+    web3Connect.activate(walletConnectConnector, (error) => {
+      if (error instanceof UserRejectedRequestError) {
+        // ignore user rejected error
+      } else {
+        web3Connect.setError(error)
+      }
+    }, false)    
+  }
+
   function disconnect() {
     web3Connect.deactivate()
   }
@@ -33,9 +43,15 @@ export function Account() {
   return (
     <>
       {!web3Connect.active && 
-        <Button colorScheme={DEFAULT_COLOR_SCHEME} onClick={connect}>
-          Connect
-        </Button>
+        <Menu>
+          <MenuButton as={Button} rightIcon={<ChevronDownIcon />} colorScheme={DEFAULT_COLOR_SCHEME}>
+            Connect
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={connect}>Metamask</MenuItem>
+            <MenuItem onClick={walletConnect}>WalletConnect</MenuItem>
+          </MenuList>
+        </Menu>
       }
 
       {web3Connect.active && typeof web3Connect.account === 'string' && typeof web3Connect.chainId === 'number' && 
