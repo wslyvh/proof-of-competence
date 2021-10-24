@@ -1,5 +1,5 @@
 import { VStack, Heading, Box, LinkOverlay, LinkBox } from "@chakra-ui/layout"
-import { Text, useColorModeValue } from '@chakra-ui/react'
+import { Text } from '@chakra-ui/react'
 import { GetStaticProps } from "next"
 import React from "react"
 import { getJourneys } from "services/journey"

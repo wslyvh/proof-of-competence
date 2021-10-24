@@ -48,5 +48,14 @@ A tasks is defined in the following format
 
 * chainId is optional and defaults to 1 (mainnet)
 
+# PoC API 
+
+The Proof of Competence scores can be integrated into other projects by using the API. There are 2 main endpoints to fetch the journey, as described above, or include the scores from a specific address.
+
+## Endpoints
+
+* Journey - `https://proof-of-competence.vercel.app/api/journey?name=useweb3` 
+* Score - `https://proof-of-competence.vercel.app/api/journey/score?name=useweb3&address=0x123`
+
 ### License
 [MIT](LICENSE)
