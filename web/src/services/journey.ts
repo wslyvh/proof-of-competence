@@ -1,15 +1,13 @@
 
 import fs from 'fs'
 import path from 'path'
-import { join } from 'path'
+import { resolve, join } from 'path'
 import { Journey } from 'types'
-import getConfig from 'next/config'
-const { serverRuntimeConfig } = getConfig()
 
-const baseFolder = 'public/journeys'
+const baseFolder = 'journeys'
 
 export function getJourneyNames(): Array<string> {
-    const dir = join(serverRuntimeConfig.PROJECT_ROOT, baseFolder)
+    const dir = resolve(process.cwd(), 'src', 'journeys')
     const dirs = fs.readdirSync(dir, { withFileTypes: true })
         .filter(i => i.isFile() && i.name.endsWith('.json'))
         .map(i => i.name.replace('.json', ''))
@@ -19,15 +17,13 @@ export function getJourneyNames(): Array<string> {
 
 export function getJourneys(): Array<Journey> {
     console.log('GET JOURNEYS')
-    console.log('Process dir', process.cwd())
-    console.log('Project dir', serverRuntimeConfig.PROJECT_ROOT)
-    const oldDir = join(serverRuntimeConfig.PROJECT_ROOT, baseFolder)
-    console.log('Journey dir 1', oldDir)
-    const dir = path.resolve('./public', 'journeys')
-    console.log('Journey dir 2', dir)
+    const dir = resolve(process.cwd(), 'src', 'journeys')
+    console.log('Journey dir', dir)
 
     const files = fs.readdirSync(dir, { withFileTypes: true })
         .filter(i => i.isFile() && i.name.endsWith('.json'))
+
+    console.log('Files', files.length)
 
     const items = files.map(i => {
         const fullPath = join(dir, i.name)
