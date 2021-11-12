@@ -5,7 +5,7 @@ import { Journey } from 'types'
 import getConfig from 'next/config'
 const { serverRuntimeConfig } = getConfig()
 
-const baseFolder = 'src/journeys'
+const baseFolder = 'public/journeys'
 
 export function getJourneyNames(): Array<string> {
     const dir = join(serverRuntimeConfig.PROJECT_ROOT, baseFolder)
@@ -21,6 +21,7 @@ export function getJourneys(): Array<Journey> {
     console.log('Process dir', process.cwd())
     console.log('Project dir', serverRuntimeConfig.PROJECT_ROOT)
     const dir = join(serverRuntimeConfig.PROJECT_ROOT, baseFolder)
+    console.log('Journey dir', dir)
     const files = fs.readdirSync(dir, { withFileTypes: true })
         .filter(i => i.isFile() && i.name.endsWith('.json'))
 
