@@ -2,11 +2,13 @@
 import fs from 'fs'
 import { join } from 'path'
 import { Journey } from 'types'
+import getConfig from 'next/config'
+const { serverRuntimeConfig } = getConfig()
 
 const baseFolder = 'src/journeys'
 
 export function getJourneyNames(): Array<string> {
-    const dir = join(process.cwd(), baseFolder)
+    const dir = join(serverRuntimeConfig.PROJECT_ROOT, baseFolder)
     const dirs = fs.readdirSync(dir, { withFileTypes: true })
         .filter(i => i.isFile() && i.name.endsWith('.json'))
         .map(i => i.name.replace('.json', ''))
@@ -15,7 +17,7 @@ export function getJourneyNames(): Array<string> {
 }
 
 export function getJourneys(): Array<Journey> {
-    const dir = join(process.cwd(), baseFolder)
+    const dir = join(serverRuntimeConfig.PROJECT_ROOT, baseFolder)
     const files = fs.readdirSync(dir, { withFileTypes: true })
         .filter(i => i.isFile() && i.name.endsWith('.json'))
 
