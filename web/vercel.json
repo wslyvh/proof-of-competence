@@ -1,0 +1,10 @@
+{
+    "functions": {
+       "pages/api/journey.js": {
+          "includeFiles": "src/journeys/*.json"
+       },
+       "pages/api/journey/score.js": {
+          "includeFiles": "src/journeys/*.json"
+       }
+    }
+ }
