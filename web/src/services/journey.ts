@@ -1,5 +1,6 @@
 
 import fs from 'fs'
+import path from 'path'
 import { join } from 'path'
 import { Journey } from 'types'
 import getConfig from 'next/config'
@@ -20,8 +21,11 @@ export function getJourneys(): Array<Journey> {
     console.log('GET JOURNEYS')
     console.log('Process dir', process.cwd())
     console.log('Project dir', serverRuntimeConfig.PROJECT_ROOT)
-    const dir = join(serverRuntimeConfig.PROJECT_ROOT, baseFolder)
-    console.log('Journey dir', dir)
+    const oldDir = join(serverRuntimeConfig.PROJECT_ROOT, baseFolder)
+    console.log('Journey dir 1', oldDir)
+    const dir = path.resolve('./public', 'journeys')
+    console.log('Journey dir 2', dir)
+
     const files = fs.readdirSync(dir, { withFileTypes: true })
         .filter(i => i.isFile() && i.name.endsWith('.json'))
 
