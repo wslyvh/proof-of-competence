@@ -17,6 +17,9 @@ export function getJourneyNames(): Array<string> {
 }
 
 export function getJourneys(): Array<Journey> {
+    console.log('GET JOURNEYS')
+    console.log('Process dir', process.cwd())
+    console.log('Project dir', serverRuntimeConfig.PROJECT_ROOT)
     const dir = join(serverRuntimeConfig.PROJECT_ROOT, baseFolder)
     const files = fs.readdirSync(dir, { withFileTypes: true })
         .filter(i => i.isFile() && i.name.endsWith('.json'))
