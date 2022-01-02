@@ -29,6 +29,31 @@
         "verifier": "ens-avatar"
     },
     {
+        "name": "POAP",
+        "description": "Collect any memory on Proof of Attendance Protocol.",
+        "points": 100,
+        "verifier": "has-poap"
+    },
+    {
+        "name": "The collectoooooorrr",
+        "description": "Collect all the POAPs. Never misses a POAP drop.",
+        "points": 10,
+        "verifier": "has-poaps"
+    },
+    {
+        "name": "Fork in the road",
+        "description": "Collect any memorable hard fork POAPs.",
+        "points": 200,
+        "verifier": "has-poap-ids",
+        "params": {
+            "ids": [
+                "157532",
+                "689387",
+                "2338448"
+            ]
+        }
+    },
+    {
         "name": "Training wheels",
         "description": "Deploy any kind of contract to the Ropsten test network.",
         "points": 20,

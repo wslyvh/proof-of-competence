@@ -14,6 +14,7 @@ export interface Task {
     points: number
     chainId?: number
     verifier: string
+    params: { [key: string]: string | boolean | number | Array<string> }
 }
 
 export interface Verifier {
