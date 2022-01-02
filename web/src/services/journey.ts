@@ -16,14 +16,9 @@ export function getJourneyNames(): Array<string> {
 }
 
 export function getJourneys(): Array<Journey> {
-    console.log('GET JOURNEYS')
     const dir = resolve(process.cwd(), 'src', 'journeys')
-    console.log('Journey dir', dir)
-
     const files = fs.readdirSync(dir, { withFileTypes: true })
         .filter(i => i.isFile() && i.name.endsWith('.json'))
-
-    console.log('Files', files.length)
 
     const items = files.map(i => {
         const fullPath = join(dir, i.name)
