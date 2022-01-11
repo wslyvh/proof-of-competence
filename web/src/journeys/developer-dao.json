@@ -1,0 +1,35 @@
+{
+    "name": "Developer DAO",
+    "version": 1,
+    "description": "Developer DAO exists to accelerate the education and impact of a new wave of web3 builders.",
+    "website": "https://www.developerdao.com/",
+    "twitter": "developer_dao",
+    "tasks": [{
+        "name": "Create a Web3 wallet",
+        "description": "Visit https://ethereum.org/wallets and install a wallet to start your journey into the Developer DAO.",
+        "points": 0,
+        "verifier": "active-address"
+    },
+    {
+        "name": "The minter",
+        "description": "Every member will receive 400 tokens for holding the NFT at the time of the snapshot.",
+        "points": 400,
+        "verifier": "has-nft",
+        "params": {
+            "addresses": ["0x25ed58c027921e14d86380ea2646e3a1b5c55a8b"]
+        }
+    },
+    {
+        "name": "The collector",
+        "description": "If a member holds a POAP from our Developer DAO town halls before Season 0 OR voted on either of our first two snapshot proposals, they will receive an additional 359* tokens.",
+        "points": 359,
+        "verifier": "has-poap-ids",
+        "params": {
+            "ids": [
+                "2686631",
+                "2628534",
+                "2566277"
+            ]
+        }
+    }]
+}
