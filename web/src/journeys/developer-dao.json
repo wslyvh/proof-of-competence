@@ -21,8 +21,8 @@
     },
     {
         "name": "The collector",
-        "description": "If a member holds a POAP from our Developer DAO town halls before Season 0, they will receive an additional 359* tokens.",
-        "points": 359,
+        "description": "If a member holds a POAP from our Developer DAO town halls before Season 0, they will receive an additional 359* tokens. Please note that this score isn't properly calculated at the moment.",
+        "points": 0,
         "verifier": "has-poap-ids",
         "params": {
             "ids": [
@@ -45,8 +45,8 @@
     },
     {
         "name": "The DAOplomat ",
-        "description": "If a member voted on either of our first two snapshot proposals, they will receive an additional 359* tokens.",
-        "points": 359,
+        "description": "If a member voted on either of our first two snapshot proposals, they will receive an additional 359* tokens. Please note that this score isn't properly calculated at the moment.",
+        "points": 0,
         "verifier": "voted-on-snapshot",
         "params": {
             "space": "devdao.eth",
