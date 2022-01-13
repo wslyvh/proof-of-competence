@@ -17,7 +17,7 @@ export function Layout(props: Props) {
 
       <Center as="footer" bg={useColorModeValue('gray.300', 'gray.700')} p={6}>
         <p>
-          Created by <Link href="https://twitter.com/wslyvh" isExternal>@wslyvh</Link>.
+          Created by <Link href="https://twitter.com/wslyvh" isExternal>@wslyvh</Link>. Code on <Link href="https://github.com/wslyvh/proof-of-competence" isExternal>Github</Link>.
         </p>
       </Center>
     </div>
