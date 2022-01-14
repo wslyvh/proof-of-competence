@@ -6,6 +6,7 @@ export interface Journey {
     website?: string
     twitter?: string
     tasks: Array<Task>
+    reward?: 'none' | 'self-attest'
 }
 
 export interface Task {

@@ -104,9 +104,11 @@ export default function JourneyPage(props: Props) {
                 <StarIcon mr={2} />
                 <Text fontSize="xl">Score {score} / {maxScore}</Text>
               </Box>
-              <Button disabled={web3.chainId !== 4}
-                bg={bgButton} color={colorButton} colorScheme={DEFAULT_COLOR_SCHEME} 
-                onClick={attest}>Attest (rinkeby)</Button>
+              {journey.reward === 'self-attest' && 
+                <Button disabled={web3.chainId !== 4}
+                  bg={bgButton} color={colorButton} colorScheme={DEFAULT_COLOR_SCHEME} 
+                  onClick={attest}>Attest (rinkeby)</Button>
+              }
           </VStack>
       </Center>
 

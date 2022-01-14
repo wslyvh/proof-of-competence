@@ -4,6 +4,7 @@
     "description": "Onboarding new developers into the Web3 space",
     "website": "useweb3.xyz",
     "twitter": "useWeb3",
+    "reward": "self-attest",
     "tasks": [{
         "name": "Let's get it started!",
         "description": "Visit https://ethereum.org/wallets and install a wallet to start your journey.",
