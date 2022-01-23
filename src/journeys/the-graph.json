@@ -1,7 +1,7 @@
 {
     "name": "The Graph",
     "version": 1,
-    "description": "The Graph is an indexing protocol for querying networks like Ethereum and IPFS. Anyone can build and publish open APIs, called subgraphs, making data easily accessible.",
+    "description": "The Graph is an indexing protocol for querying networks like Ethereum and IPFS. Anyone can build and publish open APIs, called subgraphs, making data easily accessible. *This is an example project. The scores below are not accurate. Feel free to jump in on Github to make this quest a reality.",
     "website": "https://thegraph.com/",
     "twitter": "graphprotocol",
     "tasks": [{

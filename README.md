@@ -3,29 +3,32 @@
 Proof of Competence (PoC) is an open, permissionless framework to create on-boarding journeys into the Web3 space. It uses a pluggable task system which can verify that on-chain actions have occurred. This allows to build up reputation or social (DAO) scores that proof an address is familiar with the specified technologies or protocols.
 
 This allows to:
-* Create on-boarding journeys for developers to learn about a protocol
+* Create on-boarding quests for developers to learn about a protocol
 * Proof an address is competent enough to have a basic understanding of a protocol
 * Novel ways to use the social (DAO) scores instead of token-weights for governance
 
-# Journey's
 
-Create a journey and define the tasks that are important for your project to help people become more familiar with the protocol. 
+# Quests
 
-## Adding a journey
+Create a quest and define the tasks that are important for your project to help people become more familiar with the protocol. 
 
-* A journey should be unique and be used to onboard new people into the space
-* Journeys are stored in JSON format at `/src/journeys`. 
+## Adding a quest
 
-A journey is defined in the following format
+* A quest should be unique and be used to onboard new people into the space
+* Quests are stored in JSON format at `/src/journeys`. 
+
+A quest is defined in the following format
 ```
 {
-    "name": "Title of the journey.",
-    "description": "A clear and concise description of the journey.",
+    "name": "Title of the quest.",
+    "description": "A clear and concise description of the quest.",
     "website": "https://website.org/",
     "twitter": "AccountHandle",
     "tasks": []
 }
 ```
+
+Want to submit your own quest to PoC? Feel free to submit a PR/issue.
 
 ## Adding a task verifier
  
@@ -45,17 +48,52 @@ A tasks is defined in the following format
     "chainId": 1
 }
 ```
+*`chainId` is optional and defaults to 1 (mainnet)
 
-* chainId is optional and defaults to 1 (mainnet)
+You can pass parameters to a verifier to further configure them.
+```
+{
+    "name": "NFT Collector",
+    "description": "Get points if you hold this NFT.",
+    "points": 100,
+    "verifier": "has-nft",
+    "params": {
+        "addresses": "0x25ed58c027921e14d86380ea2646e3a1b5c55a8b"]
+    }
+}
+```
+
 
 # PoC API 
 
-The Proof of Competence scores can be integrated into other projects by using the API. There are 2 main endpoints to fetch the journey, as described above, or include the scores from a specific address.
+The Proof of Competence scores can be integrated into other projects by using the API. There are 2 main endpoints to fetch the quest, as described above, or include the scores from a specific address.
 
 ## Endpoints
 
 * Journey - `https://proof-of-competence.vercel.app/api/journey?name=useweb3` 
 * Score - `https://proof-of-competence.vercel.app/api/journey/score?journey=useweb3&address=0x123`
+
+# Development
+
+1. Install all packages `yarn install`
+
+2. Create a `.env` file `touch .env`
+
+3. Add the below configuration to your .env file. You need to request API keys at Alchemy, Etherscan and Infura.
+
+4. Start your project `yarn dev`
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Environment variables 
+
+Copy the following, incl valid API keys to your `.env` file.
+```
+NEXT_PUBLIC_ALCHEMY_API_KEY=''
+NEXT_PUBLIC_INFURA_API_KEY=''
+NEXT_PUBLIC_ETHERSCAN_API_KEY=''
+
+```
 
 ### License
 [MIT](LICENSE)

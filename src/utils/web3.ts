@@ -4,6 +4,7 @@ import { Web3Provider } from "@ethersproject/providers"
 import { BigNumberish } from "@ethersproject/bignumber";
 import { formatUnits } from "@ethersproject/units";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { APP_CONFIG } from "./config";
 
 export const injected = new InjectedConnector({
     supportedChainIds: [1, 3, 4, 5, 10, 42, 42161]
@@ -11,11 +12,13 @@ export const injected = new InjectedConnector({
 
 export const walletConnectConnector = new WalletConnectConnector({ 
     rpc: { 
-        1: 'https://mainnet.infura.io/v3/d75dedf8365a48e1bbb78a7fa8b83faa',
-        3: 'https://ropsten.infura.io/v3/d75dedf8365a48e1bbb78a7fa8b83faa',
-        4: 'https://rinkeby.infura.io/v3/d75dedf8365a48e1bbb78a7fa8b83faa',
-        5: 'https://goerli.infura.io/v3/d75dedf8365a48e1bbb78a7fa8b83faa',
-        42: 'https://kovan.infura.io/v3/d75dedf8365a48e1bbb78a7fa8b83faa',
+        1: `https://mainnet.infura.io/v3/${APP_CONFIG.INFURA_API_KEY}`,
+        3: `https://ropsten.infura.io/v3/${APP_CONFIG.INFURA_API_KEY}`,
+        4: `https://rinkeby.infura.io/v3/${APP_CONFIG.INFURA_API_KEY}`,
+        5: `https://goerli.infura.io/v3/${APP_CONFIG.INFURA_API_KEY}`,
+        10: `https://optimism-mainnet.infura.io/v3/${APP_CONFIG.INFURA_API_KEY}`,
+        42: `https://kovan.infura.io/v3/${APP_CONFIG.INFURA_API_KEY}`,
+        42161: `https://arbitrum-mainnet.infura.io/v3/${APP_CONFIG.INFURA_API_KEY}`,
     } 
 })
 
@@ -68,6 +71,28 @@ export function getNetworkName(chainId: number) {
 export function formatEtherscanLink(type: 'Account' | 'Transaction', value: string, chainId: number = 1) {
     const networkName = chainId ? 'www' : getNetwork(chainId).name
 
+    if (chainId === 10) {
+        switch (type) {
+            case 'Account': {
+                return `https://optimistic.etherscan.io/address/${value}`
+            }
+            case 'Transaction': {
+                return `https://optimistic.etherscan.io/tx/${value}`
+            }
+        }
+    }
+    
+    if (chainId === 42161) {
+        switch (type) {
+            case 'Account': {
+                return `https://arbiscan.io/address/${value}`
+            }
+            case 'Transaction': {
+                return `https://arbiscan.io/tx/${value}`
+            }
+        }
+    }
+    
     switch (type) {
         case 'Account': {
             return `https://${networkName}.etherscan.io/address/${value}`

@@ -1,6 +1,7 @@
 import { useWeb3React } from "@web3-react/core"
 import makeBlockie from "ethereum-blockies-base64"
 import { useEffect, useState } from "react"
+import { APP_CONFIG } from "utils/config"
 
 const defaultValue = {name: '', url: ''}
 

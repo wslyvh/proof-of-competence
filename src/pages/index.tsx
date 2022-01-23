@@ -15,6 +15,7 @@ export default function HomePage(props: Props) {
   return <div>
     <Box mb={4}>
       <p>{DESCRIPTION}</p>
+      <p>Want to submit your own quest to PoC? Feel free to submit a <NextLink href='https://github.com/wslyvh/proof-of-competence/' passHref>PR/issue</NextLink>.</p>
     </Box>
 
     <VStack as='section'
