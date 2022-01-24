@@ -20,10 +20,7 @@ import { AlchemyProvider } from '@ethersproject/providers'
 export async function verify(task: Task, address: string): Promise<boolean | number>
 {
     if (!address) return false
-    let amount:number = 0
-    if (task.params){
-        if('amount' in task.params) amount = Number(task.params['amount'])
-    }
+    const amount:number =  Number(task.params?.['amount'] ?? 0)
     
     try { 
         const provider = new AlchemyProvider(task.chainId || 1, process.env.NEXT_PUBLIC_ALCHEMY_API_KEY)
