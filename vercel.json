@@ -1,10 +1,7 @@
 {
     "functions": {
-       "pages/api/js.js": {
-          "includeFiles": "src/journeys/**.json"
-       },
-       "pages/api/files.ts": {
-          "includeFiles": "src/journeys/**.json"
+       "pages/api/files.js": {
+          "includeFiles": "/quests/**.json"
        },
        "pages/api/journey.js": {
           "includeFiles": "src/journeys/*.json"

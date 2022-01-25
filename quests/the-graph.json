@@ -1,0 +1,37 @@
+{
+    "name": "The Graph",
+    "version": 1,
+    "description": "The Graph is an indexing protocol for querying networks like Ethereum and IPFS. Anyone can build and publish open APIs, called subgraphs, making data easily accessible. *This is an example project. The scores below are not accurate. Feel free to jump in on Github to make this quest a reality.",
+    "website": "https://thegraph.com/",
+    "twitter": "graphprotocol",
+    "tasks": [{
+        "name": "Create a Web3 wallet",
+        "description": "Visit https://ethereum.org/wallets and install a wallet to start your journey.",
+        "points": 100,
+        "verifier": "active-address"
+    },
+    {
+        "name": "$GRT token",
+        "description": "Buy and hold any amount of $GRT tokens in your wallet.",
+        "points": 100,
+        "verifier": "active-address"
+    },
+    {
+        "name": "Indexer",
+        "description": "Operate a node to index data and serve queries https://thegraph.com/docs/indexing",
+        "points": 500,
+        "verifier": "test-always-false"
+    },
+    {
+        "name": "Curator",
+        "description": "Organize data by signaling on subgraphs https://thegraph.com/docs/curating",
+        "points": 500,
+        "verifier": "test-always-false"
+    },
+    {
+        "name": "Delegator",
+        "description": "Secure the network by delegating GRT to Indexers https://thegraph.com/docs/delegating",
+        "points": 100,
+        "verifier": "test-random-number"
+    }]
+}
