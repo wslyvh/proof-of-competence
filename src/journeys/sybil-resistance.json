@@ -1,0 +1,32 @@
+{
+    "name": "Sybil Resistance",
+    "version": 1,
+    "description": "Sybil resistance is an important aspect for creating fair governance systems and crypto networks. This quest combines different identity mechanisms to provide trust scores that can help minimize sybil attacks.",
+    "twitter": "wslyvh",
+    "tasks": [
+        {
+            "name": "ENS",
+            "description": "Register your unique ENS name at https://app.ens.domains/.",
+            "points": 100,
+            "verifier": "ens-reverse-lookup"
+        },
+        {
+            "name": "POAP",
+            "description": "POAPs https://poap.xyz/ are digital mementos, minted in celebration of life's remarkable moments. Gain points for each POAP that you collected.",
+            "points": 2,
+            "verifier": "has-poaps"
+        },
+        {
+            "name": "BrightID",
+            "description": "BrightID https://www.brightid.org/ is a social identity network that allows you to prove that you're only using one account. NOT ACTIVE YET",
+            "points": 200,
+            "verifier": "test-always-false"
+        },
+        {
+            "name": "Proof of Humanity",
+            "description": "Register yourself and get vouched by an existing member of the PoH community at https://www.proofofhumanity.id/",
+            "points": 200,
+            "verifier": "poh-registered"
+        }
+    ]
+}
