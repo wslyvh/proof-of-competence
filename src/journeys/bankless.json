@@ -24,7 +24,7 @@
       "name": "🌐 Join Bankless DAO and vote on Snapshot",
       "description": "Participate in (off-chain) governance using Snapshot and vote on min. 1 proposal.",
       "points": 400,
-      "verifier": "voted-on-snapshot",
+      "verifier": "snapshot-voted-on",
       "params": {
         "space": "banklessvault.eth"
       }

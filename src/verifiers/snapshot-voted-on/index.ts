@@ -1,12 +1,10 @@
 import { Task } from 'types'
 
-export async function verify(task: Task, address: string): Promise<boolean | number>
-{
+export async function verify(task: Task, address: string): Promise<boolean | number> {
     if (!address) return false
     if (!task.params['space']) return false
-    
 
-    try { 
+    try {
         const space = task.params['space'] as string
         const response = await fetch('https://hub.snapshot.org/graphql', {
             method: 'POST',
@@ -16,7 +14,6 @@ export async function verify(task: Task, address: string): Promise<boolean | num
             body: JSON.stringify({
                 query: `query GetVotes($address: String!, $space: String!) {
                     votes (
-                      first: 1000
                       where: {
                         voter: $address
                         space: $space
@@ -44,11 +41,10 @@ export async function verify(task: Task, address: string): Promise<boolean | num
         if (proposals.length > 0) {
             return votes.map((i: any) => i.proposal.id).some(i => proposals.includes(i))
         }
-        else { 
-            return votes.length > 0
-        }
+        
+        return votes.length > 0
     }
-    catch(e) {
+    catch (e) {
         return false
     }
 }

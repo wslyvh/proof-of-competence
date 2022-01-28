@@ -42,7 +42,7 @@
         "name": "The DAOplomat ",
         "description": "If a member voted on either of our first two snapshot proposals, they will receive an additional 359* tokens. Please note that this score isn't properly calculated at the moment. You'll get 359 points for being a collector -OR- a DAOplomat.",
         "points": 0,
-        "verifier": "voted-on-snapshot",
+        "verifier": "snapshot-voted-on",
         "params": {
             "space": "devdao.eth",
             "propsals": [
