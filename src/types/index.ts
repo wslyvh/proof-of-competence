@@ -21,3 +21,9 @@ export interface Task {
 export interface Verifier {
     verify(task: Task, address: string): Promise<boolean | number>
 }
+
+export interface ApiResponse<T> {
+    code: number
+    message: string
+    data?: T
+}

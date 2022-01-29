@@ -1,8 +1,7 @@
 import { ethers } from 'ethers'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getQuests } from 'services/quests'
-import { Quest } from 'types'
-import { APP_CONFIG } from 'utils/config'
+import { ApiResponse, Quest } from 'types'
 import { verifyQuestScore } from 'utils/verify'
 import { tryResolveName } from 'utils/web3'
 
@@ -13,15 +12,21 @@ type ResponseData = {
   quest: Quest
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData | string>) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<ApiResponse<ResponseData>>) {
   const id = req.query.id as string
   if (!id) {
-    res.status(405).send('quest id not provided.')
+    res.status(405).json({
+      code: 405,
+      message: 'quest id not provided.',
+    })
     return
   }
   const account = req.query.account as string
   if (!account) {
-    res.status(405).send('account not provided.')
+    res.status(405).json({
+      code: 405,
+      message: 'account not provided.',
+    })
     return
   }
 
@@ -34,13 +39,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     address = await tryResolveName(account)
   }
   if (!address) {
-    res.status(400).send('account not valid.')
+    res.status(400).json({
+      code: 400,
+      message: 'account not valid.',
+    })
     return
   }
 
   const quest = getQuests().find(i => i.id.toLowerCase() === id.toLowerCase())
   if (!quest) {
-    res.status(404).send(`Quest '${id}' not found.`)
+    res.status(404).json({
+      code: 404,
+      message: `quest ${name} not found.`,
+    })
     return
   }
 
@@ -49,10 +60,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   if (quest) {
     res.status(200).json({
-      address,
-      score,
-      maxScore,
-      quest
+      code: 200,
+      message: '',
+      data: {
+        address,
+        score,
+        maxScore,
+        quest
+      }
     })
   }
 }
