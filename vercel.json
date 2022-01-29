@@ -1,13 +1,13 @@
 {
-    "functions": {
-       "pages/api/files.js": {
-          "includeFiles": "/quests/**.json"
-       },
-       "pages/api/journey.js": {
-          "includeFiles": "src/journeys/*.json"
-       },
-       "pages/api/journey/score.js": {
-          "includeFiles": "src/journeys/*.json"
-       }
-    }
- }
+   "functions": {
+      "pages/api/files.ts": {
+         "includeFiles": "/quests/*.txt"
+      },
+      "pages/api/journey.js": {
+         "includeFiles": "src/journeys/*.json"
+      },
+      "pages/api/journey/score.js": {
+         "includeFiles": "src/journeys/*.json"
+      }
+   }
+}

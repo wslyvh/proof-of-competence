@@ -1,31 +1,22 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
-import { join } from 'path'
+import { join, resolve } from 'path'
 import fs from 'fs'
+import { NextApiRequest, NextApiResponse } from 'next';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<Array<string>>) {
+export default function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   console.log('Files handler..')
 
-  const current = join(__dirname)
-  console.log('Current dir', current)
-
-  const files = fs.readdirSync(current, { withFileTypes: true }).map(i => i.name)
-  fs.readdirSync(current, { withFileTypes: true }).forEach(i => {
-    console.log('  -', i.name)
-  })
-
-
-  try { 
-    const questsDir = join(__dirname, 'quests')
-    console.log('Quests dir', questsDir)
-    const quests = fs.readdirSync(current, { withFileTypes: true }).map(i => i.name)
-    fs.readdirSync(current, { withFileTypes: true }).forEach(i => {
+  try {
+    const dir = resolve(process.cwd(), "quests");
+    const files = fs.readdirSync(dir, { withFileTypes: true }).map((i: any) => i.name)
+    fs.readdirSync(dir, { withFileTypes: true }).forEach((i: any) => {
       console.log('  -', i.name)
     })
-  }
-  catch (e) { 
-    console.log('Unable to fetch quests')
-    console.error(e)
-  }
 
-  res.status(200).json(files)
+    res.status(200).json({ data: files })
+  }
+  catch (e) {
+    console.log('Unable to read files..')
+    console.error(e)
+    res.status(500).json({ data: undefined })
+  }
 }

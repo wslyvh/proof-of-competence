@@ -26,13 +26,14 @@
     "ethers": "^5.5.0",
     "framer-motion": "^4",
     "moment": "^2.29.1",
-    "next": "11.1.2",
+    "next": "^12.0.9",
     "next-plausible": "^3.1.4",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-linkify": "^1.0.0-alpha"
   },
   "devDependencies": {
+    "@types/node": "^17.0.13",
     "@types/react": "^17.0.29",
     "@types/react-linkify": "^1.0.1",
     "eslint": "^7.23.0",
