@@ -20,7 +20,7 @@
         {
             "name": "Governance",
             "description": "Participate in PoH governance using Snapshot and score points for each vote",
-            "points": 100,
+            "points": 50,
             "verifier": "snapshot-votes",
             "params": {
                 "space": "poh.eth"
