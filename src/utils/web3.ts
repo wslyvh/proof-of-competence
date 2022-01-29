@@ -132,7 +132,7 @@ export async function tryResolveName(name: string): Promise<string | undefined> 
         etherscan: APP_CONFIG.ETHERSCAN_API_KEY,
         infura: APP_CONFIG.INFURA_API_KEY,
         alchemy: APP_CONFIG.ALCHEMY_API_KEY,
-        // pocket: YOUR_POCKET_APPLICATION_KEY
+        pocket: APP_CONFIG.POKT_API_KEY
     })
 
     try {

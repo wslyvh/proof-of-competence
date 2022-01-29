@@ -93,6 +93,7 @@ Copy the following, incl valid API keys to your `.env` file.
 NEXT_PUBLIC_ALCHEMY_API_KEY=''
 NEXT_PUBLIC_INFURA_API_KEY=''
 NEXT_PUBLIC_ETHERSCAN_API_KEY=''
+NEXT_PUBLIC_POKT_API_KEY=''
 
 ```
 
