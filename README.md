@@ -70,9 +70,9 @@ The Proof of Competence scores can be integrated into other projects by using th
 
 ## Endpoints
 
-* GET Quests - `https://poc.quest/api/quests`
-* GET Quest - `https://poc.quest/api/quests/useweb3` 
-* GET Score - `https://poc.quest/api/quests/useweb3/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` (also supports ENS names)
+* GET Quests - [`https://poc.quest/api/quests`](https://poc.quest/api/quests)
+* GET Quest - [`https://poc.quest/api/quests/useweb3`](https://poc.quest/api/quests/useweb3)
+* GET Score - [`https://poc.quest/api/quests/useweb3/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`](https://poc.quest/api/quests/useweb3/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045) (also supports ENS names)
 
 # Development
 
