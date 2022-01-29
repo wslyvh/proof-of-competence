@@ -1,9 +1,9 @@
-import { Journey, Task } from "types"
+import { Quest, Task } from "types"
 
-export async function verifyJourneyScore(journey: Journey, address: string) {
+export async function verifyQuestScore(quest: Quest, address: string) {
     let score = 0
 
-    await Promise.all(journey.tasks.map(async (task: Task) => {
+    await Promise.all(quest.tasks.map(async (task: Task) => {
         const result = await verifyScore(task, address)
         if (result && typeof result === 'boolean') {
           score += task.points

@@ -3,12 +3,12 @@ import { Text } from '@chakra-ui/react'
 import { GetStaticProps } from "next"
 import React from "react"
 import NextLink from "next/link"
-import { getJourneys } from "services/journey"
-import { Journey } from "types"
+import { getQuests } from "services/quests"
+import { Quest } from "types"
 import { DEFAULT_REVALIDATE_PERIOD, DESCRIPTION } from "utils/constants"
 
 interface Props {
-  journeys: Array<Journey>
+  quests: Array<Quest>
 }
 
 export default function HomePage(props: Props) {
@@ -23,17 +23,17 @@ export default function HomePage(props: Props) {
       align="stretch">
       <Heading as="h3" size='lg'>Explore</Heading>
 
-      {props.journeys.map((journey: Journey) => {
+      {props.quests.map((quest: Quest) => {
         return (
-          <LinkBox key={journey.id} as='article' my={4} p={4} borderWidth="1px" borderRadius="lg" overflow="hidden">
+          <LinkBox key={quest.id} as='article' my={4} p={4} borderWidth="1px" borderRadius="lg" overflow="hidden">
             <Heading fontSize='xl'>
-              <NextLink href={`/${journey.id}`} passHref>
+              <NextLink href={`/${quest.id}`} passHref>
                 <LinkOverlay>
-                  {journey.name}
+                  {quest.name}
                 </LinkOverlay>
               </NextLink>
             </Heading>
-            <Text mt={4}>{journey.description}</Text>
+            <Text mt={4}>{quest.description}</Text>
           </LinkBox>
         )})
       }
@@ -42,11 +42,11 @@ export default function HomePage(props: Props) {
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const journeys = getJourneys()
+  const quests = getQuests()
   
   return {
     props: {
-      journeys
+      quests
     },
     revalidate: DEFAULT_REVALIDATE_PERIOD
   }

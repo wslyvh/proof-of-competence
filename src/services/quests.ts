@@ -2,12 +2,10 @@
 import fs from 'fs'
 import path from 'path'
 import { resolve, join } from 'path'
-import { Journey } from 'types'
+import { Quest } from 'types'
 
-const baseFolder = 'journeys'
-
-export function getJourneyNames(): Array<string> {
-    const dir = resolve(process.cwd(), 'src', 'journeys')
+export function getQuestNames(): Array<string> {
+    const dir = resolve(process.cwd(), 'quests')
     const dirs = fs.readdirSync(dir, { withFileTypes: true })
         .filter(i => i.isFile() && i.name.endsWith('.json'))
         .map(i => i.name.replace('.json', ''))
@@ -15,8 +13,8 @@ export function getJourneyNames(): Array<string> {
     return dirs
 }
 
-export function getJourneys(): Array<Journey> {
-    const dir = resolve(process.cwd(), 'src', 'journeys')
+export function getQuests(): Array<Quest> {
+    const dir = resolve(process.cwd(), 'quests')
     const files = fs.readdirSync(dir, { withFileTypes: true })
         .filter(i => i.isFile() && i.name.endsWith('.json'))
 
@@ -28,13 +26,13 @@ export function getJourneys(): Array<Journey> {
         }
         
         if (content) {
-            let journey = JSON.parse(content) as Journey 
+            let quest = JSON.parse(content) as Quest 
             return {
-                ...journey,
+                ...quest,
                 id: i.name.replace('.json', '')
             }
         }
-    }).filter(i => !!i) as Array<Journey> 
+    }).filter(i => !!i) as Array<Quest>
     
     return items
 }

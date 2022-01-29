@@ -5,13 +5,14 @@ import { BigNumberish } from "@ethersproject/bignumber";
 import { formatUnits } from "@ethersproject/units";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { APP_CONFIG } from "./config";
+import { ethers } from "ethers";
 
 export const injected = new InjectedConnector({
     supportedChainIds: [1, 3, 4, 5, 10, 42, 42161]
 })
 
-export const walletConnectConnector = new WalletConnectConnector({ 
-    rpc: { 
+export const walletConnectConnector = new WalletConnectConnector({
+    rpc: {
         1: `https://mainnet.infura.io/v3/${APP_CONFIG.INFURA_API_KEY}`,
         3: `https://ropsten.infura.io/v3/${APP_CONFIG.INFURA_API_KEY}`,
         4: `https://rinkeby.infura.io/v3/${APP_CONFIG.INFURA_API_KEY}`,
@@ -19,7 +20,7 @@ export const walletConnectConnector = new WalletConnectConnector({
         10: `https://optimism-mainnet.infura.io/v3/${APP_CONFIG.INFURA_API_KEY}`,
         42: `https://kovan.infura.io/v3/${APP_CONFIG.INFURA_API_KEY}`,
         42161: `https://arbitrum-mainnet.infura.io/v3/${APP_CONFIG.INFURA_API_KEY}`,
-    } 
+    }
 })
 
 export function getProvider(provider: ExternalProvider | JsonRpcFetchFunc) {
@@ -64,7 +65,7 @@ export function getNetworkName(chainId: number) {
     if (!name || name === 'homestead') return 'mainnet'
     if (chainId === 10) name = 'optimistic'
     if (chainId === 42161) name = 'arbitrum'
-    
+
     return name
 }
 
@@ -81,7 +82,7 @@ export function formatEtherscanLink(type: 'Account' | 'Transaction', value: stri
             }
         }
     }
-    
+
     if (chainId === 42161) {
         switch (type) {
             case 'Account': {
@@ -92,7 +93,7 @@ export function formatEtherscanLink(type: 'Account' | 'Transaction', value: stri
             }
         }
     }
-    
+
     switch (type) {
         case 'Account': {
             return `https://${networkName}.etherscan.io/address/${value}`
@@ -124,4 +125,23 @@ export function getEtherscanBaseApiUri(chainId: number = 1) {
 
 export function parseBalance(value: BigNumberish, decimals = 18, decimalsToDisplay = 3) {
     return parseFloat(formatUnits(value, decimals)).toFixed(decimalsToDisplay)
+}
+
+export async function tryResolveName(name: string): Promise<string | undefined> {
+    const provider = ethers.getDefaultProvider(undefined, {
+        etherscan: APP_CONFIG.ETHERSCAN_API_KEY,
+        infura: APP_CONFIG.INFURA_API_KEY,
+        alchemy: APP_CONFIG.ALCHEMY_API_KEY,
+        // pocket: YOUR_POCKET_APPLICATION_KEY
+    })
+
+    try {
+        const resolved = await provider.resolveName(name)
+        if (resolved) {
+            return resolved
+        }
+    }
+    catch (e) {
+        console.log('Invalid ENS name', name)
+    }
 }

@@ -2,25 +2,25 @@ import React, { useEffect, useState } from "react"
 import { GetStaticProps, GetStaticPaths } from 'next'
 import { ParsedUrlQuery } from 'querystring'
 import { DEFAULT_COLOR_SCHEME, DEFAULT_REVALIDATE_PERIOD } from "utils/constants"
-import { Journey, Task } from "types"
+import { Quest, Task } from "types"
 import { Box, Center, Flex, Link, VStack } from "@chakra-ui/layout"
 import { useColorModeValue ,Text, Heading, Button, useToast } from '@chakra-ui/react'
 import { useWeb3React } from "@web3-react/core"
 import { verifyScore } from "utils/verify"
 import { StarIcon } from "@chakra-ui/icons"
 import TaskCard from "components/task"
-import { getJourneyNames, getJourneys } from "services/journey"
+import { getQuestNames, getQuests } from "services/quests"
 import { attestScore } from "services/attestation"
 
 interface Props {
-  journey: Journey
+  quest: Quest
 }
 
 interface Params extends ParsedUrlQuery {
-  journey: string
+  quest: string
 }
 
-export default function JourneyPage(props: Props) {
+export default function QuestPage(props: Props) {
   const [score, setScore] = useState(0)
   const bgButton = useColorModeValue('teal.700', 'teal.700')
   const colorButton = useColorModeValue('grey.900', 'grey.100')
@@ -30,14 +30,14 @@ export default function JourneyPage(props: Props) {
   const toast = useToast()
   
   const web3 = useWeb3React()
-  const journey = props.journey
+  const quest = props.quest
 
   useEffect(() => {
     async function getScore() {
       let score = 0
-      if (!props.journey) return
+      if (!props.quest) return
 
-      await Promise.all(props.journey.tasks.map(async (task: Task) => {
+      await Promise.all(props.quest.tasks.map(async (task: Task) => {
         const result = await verifyScore(task, web3.account)
         if (result && typeof result === 'boolean') {
           score += task.points
@@ -51,15 +51,15 @@ export default function JourneyPage(props: Props) {
     }
 
     getScore()
-  }, [props.journey, web3.account])
+  }, [props.quest, web3.account])
 
-  if (!journey) return null
+  if (!quest) return null
   
-  const maxScore = journey.tasks.map(i => i.points).reduce((acc, i) => acc + i, 0)
+  const maxScore = quest.tasks.map(i => i.points).reduce((acc, i) => acc + i, 0)
 
   async function attest() {
     if (web3.account && web3.library) {
-      const result = await attestScore(journey, score, web3.account, web3.library)
+      const result = await attestScore(quest, score, web3.account, web3.library)
       if (result) {
         toast({
           title: "Transaction sent.",
@@ -75,13 +75,13 @@ export default function JourneyPage(props: Props) {
   return <>
     <div>
       <Box as='section' p='8' borderRadius="xl" bg={bgBox}>
-        <Heading as="h2" mb='4'>{journey.name}</Heading>
-        <Text fontSize="xl">{journey.description}</Text>
+        <Heading as="h2" mb='4'>{quest.name}</Heading>
+        <Text fontSize="xl">{quest.description}</Text>
         
-        {(journey.website || journey.twitter) && (
+        {(quest.website || quest.twitter) && (
         <Flex alignItems={['stretch', 'center']} flexDirection={['column', 'row']}>
-          {journey.website && (
-            <Link href={journey.website} isExternal mr={[0, 4]}
+          {quest.website && (
+            <Link href={quest.website} isExternal mr={[0, 4]}
               _hover={{ textDecoration: 'none'}} _focus={{ textDecoration: 'none'}}>
               <Button size="lg" width={['100%']} colorScheme={DEFAULT_COLOR_SCHEME} mt="24px">
                 Website
@@ -89,11 +89,11 @@ export default function JourneyPage(props: Props) {
             </Link>
           )}
 
-          {journey.twitter && (
-            <Link href={`https://twitter.com/${journey.twitter}`} isExternal
+          {quest.twitter && (
+            <Link href={`https://twitter.com/${quest.twitter}`} isExternal
               _hover={{ textDecoration: 'none'}} _focus={{ textDecoration: 'none'}}>
               <Button size="lg" width={['100%']} mt="24px">
-                @{journey.twitter}
+                @{quest.twitter}
               </Button>
             </Link>
           )}
@@ -110,7 +110,7 @@ export default function JourneyPage(props: Props) {
                 <StarIcon mr={2} />
                 <Text fontSize="xl">Score {score} / {maxScore}</Text>
               </Box>
-              {journey.reward === 'self-attest' && 
+              {quest.reward === 'self-attest' && 
                 <Button disabled={web3.chainId !== 4}
                   bg={bgButton} color={colorButton} colorScheme={DEFAULT_COLOR_SCHEME} 
                   onClick={attest}>Attest (rinkeby)</Button>
@@ -123,7 +123,7 @@ export default function JourneyPage(props: Props) {
         align="stretch">
         <Heading as="h3" size='lg'>Tasks</Heading>
 
-        {journey.tasks.map((task: Task, index: number) => {
+        {quest.tasks.map((task: Task, index: number) => {
           return <TaskCard key={`${task.verifier}_${index}`} task={task} address={web3.account} />
         })}
         </VStack>
@@ -132,27 +132,27 @@ export default function JourneyPage(props: Props) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const journeys = getJourneyNames()
+  const quests = getQuestNames()
   
   return {
-    paths: journeys.map(i => {
-      return { params: { journey: i } }
+    paths: quests.map(i => {
+      return { params: { quest: i } }
     }),
     fallback: false
   }
 }
 
 export const getStaticProps: GetStaticProps<Props, Params> = async (context) => {
-  const journeyName = context.params?.journey
-  if (!journeyName) {
+  const questName = context.params?.quest
+  if (!questName) {
     return {
       props: null,
       notFound: true,
     }
   }
 
-  const journey = getJourneys().find(i => i.id.toLowerCase() === journeyName.toLowerCase())
-  if (!journey) {
+  const quest = getQuests().find(i => i.id.toLowerCase() === questName.toLowerCase())
+  if (!quest) {
     return {
       props: null,
       notFound: true,
@@ -161,7 +161,7 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (context) => 
   
   return {
     props: {
-      journey
+      quest
     },
     revalidate: DEFAULT_REVALIDATE_PERIOD
   }

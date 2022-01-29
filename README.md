@@ -15,7 +15,7 @@ Create a quest and define the tasks that are important for your project to help 
 ## Adding a quest
 
 * A quest should be unique and be used to onboard new people into the space
-* Quests are stored in JSON format at `/src/journeys`. 
+* Quests are stored in JSON format at `/quests`. 
 
 A quest is defined in the following format
 ```
@@ -70,8 +70,9 @@ The Proof of Competence scores can be integrated into other projects by using th
 
 ## Endpoints
 
-* Journey - `https://proof-of-competence.vercel.app/api/journey?name=useweb3` 
-* Score - `https://proof-of-competence.vercel.app/api/journey/score?journey=useweb3&address=0x123`
+* GET Quests - `https://poc.quest/api/quests`
+* GET Quest - `https://poc.quest/api/quests/useweb3` 
+* GET Score - `https://poc.quest/api/quests/useweb3/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045` (also supports ENS names)
 
 # Development
 

@@ -1,4 +1,4 @@
-export interface Journey {
+export interface Quest {
     id: string
     name: string
     version: number

@@ -4,7 +4,6 @@ import { Box, Flex, Button, useColorModeValue, Link, Spacer, useColorMode, Headi
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { TITLE } from 'utils/constants'
 import { Account } from './account'
-import journey from 'pages/api/journey'
 
 export default function Header() {
   const { colorMode, toggleColorMode } = useColorMode()
