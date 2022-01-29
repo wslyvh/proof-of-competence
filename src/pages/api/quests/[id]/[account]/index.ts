@@ -37,8 +37,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     res.status(400).send('account not valid.')
     return
   }
-  
-  console.log('GET SCORE FOR', address)
 
   const quest = getQuests().find(i => i.id.toLowerCase() === id.toLowerCase())
   if (!quest) {
