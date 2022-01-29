@@ -78,21 +78,27 @@ export default function JourneyPage(props: Props) {
         <Heading as="h2" mb='4'>{journey.name}</Heading>
         <Text fontSize="xl">{journey.description}</Text>
         
-        <Flex alignItems='center'>
-          <Link href={journey.website} isExternal 
-            _hover={{ textDecoration: 'none'}} _focus={{ textDecoration: 'none'}}>
-            <Button size="lg" colorScheme={DEFAULT_COLOR_SCHEME} mt="24px">
-              Website
-            </Button>
-          </Link>
+        {(journey.website || journey.twitter) && (
+        <Flex alignItems={['stretch', 'center']} flexDirection={['column', 'row']}>
+          {journey.website && (
+            <Link href={journey.website} isExternal mr={[0, 4]}
+              _hover={{ textDecoration: 'none'}} _focus={{ textDecoration: 'none'}}>
+              <Button size="lg" width={['100%']} colorScheme={DEFAULT_COLOR_SCHEME} mt="24px">
+                Website
+              </Button>
+            </Link>
+          )}
 
-          <Link href={`https://twitter.com/${journey.twitter}`} isExternal ml={4}
-            _hover={{ textDecoration: 'none'}} _focus={{ textDecoration: 'none'}}>
-            <Button size="lg" mt="24px">
-              @{journey.twitter}
-            </Button>
-          </Link>
+          {journey.twitter && (
+            <Link href={`https://twitter.com/${journey.twitter}`} isExternal
+              _hover={{ textDecoration: 'none'}} _focus={{ textDecoration: 'none'}}>
+              <Button size="lg" width={['100%']} mt="24px">
+                @{journey.twitter}
+              </Button>
+            </Link>
+          )}
         </Flex>
+        )}
       </Box>
 
       <Center as='section' h="100px" my={8} borderRadius="xl"
