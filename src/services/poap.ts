@@ -1,7 +1,6 @@
 import fs from 'fs'
+import { resolve } from 'path'
 import { APP_CONFIG } from 'utils/config'
-
-const configFilePath = './config-poap.json'
 
 interface POAPAuthConfig {
     accessToken: string
@@ -9,8 +8,10 @@ interface POAPAuthConfig {
 }
 
 export async function getAccessToken(): Promise<string> {
-    // Check if config is cached already. POAP Auth endpoint is heavily rate-limited.
     let config: POAPAuthConfig | undefined
+
+    // Check if config is cached already. POAP Auth endpoint is heavily rate-limited.
+    const configFilePath = resolve(process.cwd(), 'config-poap.json')
     if (fs.existsSync(configFilePath)) {
         console.log('Config file exists..')
         const data = fs.readFileSync(configFilePath, 'utf-8')

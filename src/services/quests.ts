@@ -1,6 +1,5 @@
 
 import fs from 'fs'
-import path from 'path'
 import { resolve, join } from 'path'
 import { Quest } from 'types'
 
