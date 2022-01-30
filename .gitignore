@@ -10,6 +10,8 @@ export.json
 .env
 .env.local
 
+config-poap.json
+
 # testing
 /coverage
 
