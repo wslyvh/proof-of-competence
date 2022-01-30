@@ -1,5 +1,6 @@
 import fs from 'fs'
-import { resolve } from 'path'
+import os from 'os'
+import { join } from 'path'
 import { APP_CONFIG } from 'utils/config'
 
 interface POAPAuthConfig {
@@ -7,11 +8,11 @@ interface POAPAuthConfig {
     expires: Date
 }
 
-export async function getAccessToken(): Promise<string> {
+export async function getAccessToken(): Promise<string | undefined> {
     let config: POAPAuthConfig | undefined
 
     // Check if config is cached already. POAP Auth endpoint is heavily rate-limited.
-    const configFilePath = resolve(process.cwd(), 'config-poap.json')
+    const configFilePath = join(os.tmpdir(), 'config-poap.json')
     if (fs.existsSync(configFilePath)) {
         console.log('Config file exists..')
         const data = fs.readFileSync(configFilePath, 'utf-8')
@@ -39,15 +40,19 @@ export async function getAccessToken(): Promise<string> {
             client_secret: APP_CONFIG.POAP_CLIENT_SECRET
         })
     })
+
     const auth = await authResponse.json()
+    if (authResponse.status === 200 && auth.access_token) {
+        // Write config to disk
+        config = {
+            accessToken: auth.access_token,
+            expires: new Date(new Date().getTime() + 60 * 60 * 24 * 1000)
+        }
+        console.log('Write new config to disk..', configFilePath)
+        fs.writeFileSync(configFilePath, JSON.stringify(config, null, 4))
 
-    // Write config to disk
-    config = {
-        accessToken: auth.access_token,
-        expires: new Date(new Date().getTime() + 60 * 60 * 24 * 1000)
+        return config.accessToken
     }
-    console.log('Write to disk..')
-    fs.writeFileSync(configFilePath, JSON.stringify(config, null, 4))
 
-    return config.accessToken
+    console.error('Unable to get valid access token..')
 }
