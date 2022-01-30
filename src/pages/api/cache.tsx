@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         return res.status(200).json('FROM CONFIG: ' + content.toString())
     }
 
-    content = new Date(new Date().getTime() + (5 * 60 * 1000))
+    content = new Date(new Date().getTime() + (60 * 60 * 2 * 1000)) // 60 * 60 * 24 * 1000
     console.log('Write new config to disk..', configFilePath)
     fs.writeFileSync(configFilePath, content.toString())
 
