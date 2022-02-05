@@ -1,7 +1,8 @@
 {
-  "name": "Claim your POAP",
+  "name": "PoC POAP",
   "version": 1,
-  "description": "This quest allows you to claim a POAP, just for being here..",
+  "description": "This quest allows you to claim a Proof of Competence early adopter POAP. Thank you for being here!",
+  "website": "https://www.poc.quest/",
   "twitter": "wslyvh",
   "reward": "poap",
   "params": {
