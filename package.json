@@ -22,6 +22,7 @@
     "@web3-react/core": "^6.1.9",
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/walletconnect-connector": "^6.2.7",
+    "airtable": "^0.11.1",
     "ethereum-blockies-base64": "^1.0.2",
     "ethers": "^5.5.0",
     "framer-motion": "^4",

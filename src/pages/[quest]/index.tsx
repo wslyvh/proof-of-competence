@@ -11,6 +11,7 @@ import { StarIcon } from "@chakra-ui/icons"
 import TaskCard from "components/task"
 import { getQuestNames, getQuests } from "services/quests"
 import { attestScore } from "services/attestation"
+import Poap from "components/rewards/poap"
 
 interface Props {
   quest: Quest
@@ -115,6 +116,7 @@ export default function QuestPage(props: Props) {
                   bg={bgButton} color={colorButton} colorScheme={DEFAULT_COLOR_SCHEME} 
                   onClick={attest}>Attest (rinkeby)</Button>
               }
+              {quest.reward === 'poap' && <Poap quest={quest} />}
           </VStack>
       </Center>
 

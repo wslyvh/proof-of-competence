@@ -6,7 +6,8 @@ export interface Quest {
     website?: string
     twitter?: string
     tasks: Array<Task>
-    reward?: 'none' | 'self-attest'
+    reward?: 'none' | 'self-attest' | 'poap'
+    params?: { [key: string]: string | boolean | number | Array<string> }
 }
 
 export interface Task {
@@ -22,8 +23,13 @@ export interface Verifier {
     verify(task: Task, address: string): Promise<boolean | number>
 }
 
-export interface ApiResponse<T> {
+export interface ApiResponseData<T> {
     code: number
     message: string
     data?: T
+}
+
+export interface ApiResponse {
+    success: boolean
+    message: string
 }

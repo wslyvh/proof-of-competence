@@ -127,6 +127,16 @@ export function parseBalance(value: BigNumberish, decimals = 18, decimalsToDispl
     return parseFloat(formatUnits(value, decimals)).toFixed(decimalsToDisplay)
 }
 
+export async function tryGetValidAddress(addressOrName: string): Promise<string | undefined> {
+    const validAddress = ethers.utils.isAddress(addressOrName)
+    if (validAddress) {
+        return addressOrName
+    }
+    if (!validAddress) {
+        return await tryResolveName(addressOrName)
+    }
+}
+
 export async function tryResolveName(name: string): Promise<string | undefined> {
     const provider = ethers.getDefaultProvider(undefined, {
         etherscan: APP_CONFIG.ETHERSCAN_API_KEY,
