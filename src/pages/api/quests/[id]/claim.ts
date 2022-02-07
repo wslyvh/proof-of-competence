@@ -50,17 +50,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
   
     if (quest.reward === 'poap' && quest.params) {
-        const mint = await mintToken(quest.params['eventId'] as number, address)
-        if (mint.success) {
-            res.status(200).json({ code: 200, message: mint.message })
-            return
+        try { 
+            const mint = await mintToken(quest.params['eventId'] as number, address)
+            if (mint.success) {
+                res.status(200).json({ code: 200, message: mint.message })
+                return
+            }
+            else {
+                res.status(500).json({ code: 500, message: mint.message })
+                return
+            }
         }
-        else {
-            res.status(500).json({ code: 500, message: mint.message })
+        catch (e) {
+            res.status(500).json({ code: 500, message: 'unable to claim reward. please report on Github.' })
             return
         }
     }
 
-    res.status(500).json({ code: 500, message: 'unable to claim reward.' })
+    res.status(500).json({ code: 500, message: 'unable to claim reward. please report on Github.' })
     return
 }
