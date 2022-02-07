@@ -14,6 +14,9 @@ type ResponseData = {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<ApiResponseData<ResponseData>>) {
+    res.status(405).json({ code: 405, message: 'Rewards are currently disabled. Please check back later.' })
+    return
+
     if (req.method !== 'POST') {
         res.status(405).json({ code: 405, message: 'only accepts POST requests.' })
         return
