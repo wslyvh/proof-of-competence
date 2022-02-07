@@ -3,6 +3,8 @@ import { APP_CONFIG } from 'utils/config'
 import { saveAccessToken as saveAccessTokenToAirtable, tryGetAccessToken as tryGetAccessTokenFromAirtable } from './airtableCache'
 import { saveAccessToken as saveAccessTokenToFs, tryGetAccessToken as tryGetAccessTokenFromFs } from './fsCache'
 
+const cache = new Map()
+
 export async function getAccessToken(): Promise<string | undefined> {
     const production = APP_CONFIG.NODE_ENV === 'production'
 
@@ -61,29 +63,19 @@ export async function getAccessToken(): Promise<string | undefined> {
 
 export async function mintToken(eventId: number, address: string): Promise<ApiResponse> {
     console.log('Minting POAP for', eventId, address)
+
+    // 1. Get an available QR codes. POAP API is rate-limited, so saving available codes in (short-term) API cache
+    const availableCodesCacheKey = `poap.service:mintToken.availableCodes-${eventId}`
+    if (!cache.has(availableCodesCacheKey)) {
+        const qrCodes = await getQrCodes(eventId)
+        const availableCodes = qrCodes.filter((i: any) => !i.claimed).map((i: any) => i.qr_hash)
+        cache.set(availableCodesCacheKey, availableCodes)
+    }
+    const qrCode = cache.get(availableCodesCacheKey).find((i: any) => !!i)
+    cache.set(availableCodesCacheKey, cache.get(availableCodesCacheKey).filter((i: any) => i !== qrCode))
+
     const accessToken = await getAccessToken()
-
-    // 1. Get an available QR codes
-    const qrResponse = await fetch(`https://api.poap.tech/event/${eventId}/qr-codes`, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`
-        },
-        body: JSON.stringify({
-            secret_code: APP_CONFIG.POAP_TEST_EVENT_SECRET, // TODO: Need to find a better way to handle event secrets
-        })
-    })
-
-    const qrCodes = await qrResponse.json() as any[]
-    const qrCode = qrCodes.find(i => !i.claimed).qr_hash
-    const claimed = qrCodes.filter(i => i.claimed).length
-    const available = qrCodes.filter(i => !i.claimed).length
-    console.log('Total # of QR codes', qrCodes.length, 'Claimed', claimed, 'Available', available)
-    if (available - claimed < 10) requestMoreCodes(eventId)
-
-    // 2. Request claim secret for a QR, that is required to mint the POAP
+    // 1. Request claim secret for a QR, that is required to mint the POAP
     const claimResponse = await fetch('https://api.poap.tech/actions/claim-qr?qr_hash=' + qrCode, {
         method: 'GET',
         headers: {
@@ -118,30 +110,54 @@ export async function mintToken(eventId: number, address: string): Promise<ApiRe
 }
 
 export async function getRewardStats(eventId: number) {
-    console.log('View available codes for', eventId)
-    const accessToken = await getAccessToken()
+    console.log('Get rewards stats', eventId)
 
-    const qrResponse = await fetch(`https://api.poap.tech/event/${eventId}/qr-codes`, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`
-        },
-        body: JSON.stringify({
-            secret_code: APP_CONFIG.POAP_TEST_EVENT_SECRET, // TODO: Need to find a better way to handle event secrets
-        })
-    })
-
-    const qrCodes = await qrResponse.json() as any[]
-    const claimed = qrCodes.filter(i => i.claimed).length
-    const available = qrCodes.filter(i => !i.claimed).length
-    console.log('Total # of QR codes', qrCodes.length, 'Claimed', claimed, 'Available', available)
+    const qrCodes = await getQrCodes(eventId)
+    const claimed = qrCodes.filter((i: any) => i.claimed).length
+    const available = qrCodes.filter((i: any) => !i.claimed).length
 
     return {
         total: qrCodes.length,
         claimed: claimed,
         available: available
+    }
+}
+
+export async function getQrCodes(eventId: number) {
+    const cacheKey = `poap.service:getQrCodes-${eventId}`
+    if (cache.has(cacheKey)) {
+        return cache.get(cacheKey)
+    }
+
+    try {
+        const accessToken = await getAccessToken()
+        const qrResponse = await fetch(`https://api.poap.tech/event/${eventId}/qr-codes`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            },
+            body: JSON.stringify({
+                secret_code: APP_CONFIG.POAP_TEST_EVENT_SECRET, // TODO: Need to find a better way to handle event secrets
+            })
+        })
+
+        const qrCodes = await qrResponse.json() as any[]
+        cache.set(cacheKey, qrCodes)
+
+        const available = qrCodes.filter((i: any) => !i.claimed).length
+        const claimed = qrCodes.filter((i: any) => i.claimed).length
+        if (available - claimed < 10) {
+            console.log('Running out of codes.. Requesting more.')
+            requestMoreCodes(eventId)
+        }
+
+        return cache.get(cacheKey)
+    }
+    catch (e) {
+        console.log('Unable to get Qr codes', e)
+        return []
     }
 }
 
