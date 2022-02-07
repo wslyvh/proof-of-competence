@@ -73,7 +73,8 @@ The Proof of Competence scores can be integrated into other projects by using th
 * GET Quests - [`https://poc.quest/api/quests`](https://poc.quest/api/quests)
 * GET Quest - [`https://poc.quest/api/quests/useweb3`](https://poc.quest/api/quests/useweb3)
 * GET Score - [`https://poc.quest/api/quests/useweb3/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045`](https://poc.quest/api/quests/useweb3/0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045) (also supports ENS names)
-* POST Claim - [`https://poc.quest/api/quests/useweb3/claim`](https://poc.quest/api/quests/useweb3/claim) (also supports ENS names) - depends on the configured reward mechanism
+* POST Claim - [`https://poc.quest/api/quests/poc-poap/claim`](https://poc.quest/api/quests/poc-poap/claim) (also supports ENS names) - depends on the configured reward mechanism
+* GET Stats - [`https://poc.quest/api/quests/poc-poap/stats`](https://poc.quest/api/quests/poc-poap/stats)
 
 Example body for Claim POST (also )
 ```
