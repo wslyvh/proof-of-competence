@@ -35,7 +35,10 @@ export default function Poap(props: Props) {
     }
 
     return (
+        <>
         <Button bg={bgButton} color={colorButton} colorScheme={DEFAULT_COLOR_SCHEME}
-            disabled={!web3.account} onClick={claim}>Claim POAP</Button>
+            disabled={true} onClick={claim}>Claim POAP</Button>
+            <p>*Temporarily disabled. Check back soon.</p>
+        </>
     )
 }

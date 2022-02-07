@@ -102,11 +102,11 @@ export default function QuestPage(props: Props) {
         )}
       </Box>
 
-      <Center as='section' h="100px" my={8} borderRadius="xl"
+      <Center as='section' py={4} my={8} borderRadius="xl"
         bg={bgCenter} 
         color={colorCenter}>
           <VStack as='section'
-            align="stretch">
+            align="stretch" alignItems='center'>
               <Box display='flex' alignItems='center'>
                 <StarIcon mr={2} />
                 <Text fontSize="xl">Score {score} / {maxScore}</Text>
