@@ -12,7 +12,7 @@ export async function getAccessToken(): Promise<string | undefined> {
 
     if (production) {
         console.log('Try to get a valid access token from Airtable..')
-        const accessToken = tryGetAccessTokenFromAirtable()
+        const accessToken = await tryGetAccessTokenFromAirtable()
         if (accessToken) {
             console.log('Return token found from Airtable..')
             return accessToken
@@ -21,7 +21,7 @@ export async function getAccessToken(): Promise<string | undefined> {
 
     if (!production) {
         console.log('Try to get a valid access token from Filesystem..')
-        const accessToken = tryGetAccessTokenFromFs()
+        const accessToken = await tryGetAccessTokenFromFs()
         if (accessToken) {
             console.log('Return token found from Filesystem..')
             return accessToken
@@ -114,6 +114,34 @@ export async function mintToken(eventId: number, address: string): Promise<ApiRe
     return {
         success: mint.claimed,
         message: mint.message
+    }
+}
+
+export async function getRewardStats(eventId: number) {
+    console.log('View available codes for', eventId)
+    const accessToken = await getAccessToken()
+
+    const qrResponse = await fetch(`https://api.poap.tech/event/${eventId}/qr-codes`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({
+            secret_code: APP_CONFIG.POAP_TEST_EVENT_SECRET, // TODO: Need to find a better way to handle event secrets
+        })
+    })
+
+    const qrCodes = await qrResponse.json() as any[]
+    const claimed = qrCodes.filter(i => i.claimed).length
+    const available = qrCodes.filter(i => !i.claimed).length
+    console.log('Total # of QR codes', qrCodes.length, 'Claimed', claimed, 'Available', available)
+
+    return {
+        total: qrCodes.length,
+        claimed: claimed,
+        available: available
     }
 }
 

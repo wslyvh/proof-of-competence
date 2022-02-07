@@ -50,7 +50,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
   
     if (quest.reward === 'poap' && quest.params) {
-        // TODO: Check if address is eligble for a reward 
         const mint = await mintToken(quest.params['eventId'] as number, address)
         if (mint.success) {
             res.status(200).json({ code: 200, message: mint.message })
