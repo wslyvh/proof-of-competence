@@ -67,12 +67,19 @@ export async function mintToken(eventId: number, address: string): Promise<ApiRe
     // 1. Get an available QR codes. POAP API is rate-limited, so saving available codes in (short-term) API cache
     const availableCodesCacheKey = `poap.service:mintToken.availableCodes-${eventId}`
     if (!cache.has(availableCodesCacheKey)) {
-        const qrCodes = await getQrCodes(eventId)
+        const qrCodes = await getQrCodes(eventId, true)
         const availableCodes = qrCodes.filter((i: any) => !i.claimed).map((i: any) => i.qr_hash)
         cache.set(availableCodesCacheKey, availableCodes)
     }
+
     const qrCode = cache.get(availableCodesCacheKey).find((i: any) => !!i)
     cache.set(availableCodesCacheKey, cache.get(availableCodesCacheKey).filter((i: any) => i !== qrCode))
+    if (!qrCode) {
+        return {
+            success: false,
+            message: 'no POAPs left for this quest.'
+        }
+    }
 
     const accessToken = await getAccessToken()
     // 1. Request claim secret for a QR, that is required to mint the POAP
@@ -112,7 +119,7 @@ export async function mintToken(eventId: number, address: string): Promise<ApiRe
 export async function getRewardStats(eventId: number) {
     console.log('Get rewards stats', eventId)
 
-    const qrCodes = await getQrCodes(eventId)
+    const qrCodes = await getQrCodes(eventId, false)
     const claimed = qrCodes.filter((i: any) => i.claimed).length
     const available = qrCodes.filter((i: any) => !i.claimed).length
 
@@ -123,7 +130,7 @@ export async function getRewardStats(eventId: number) {
     }
 }
 
-export async function getQrCodes(eventId: number) {
+export async function getQrCodes(eventId: number, requestMoreCodesIfEmpty: boolean = false) {
     const cacheKey = `poap.service:getQrCodes-${eventId}`
     if (cache.has(cacheKey)) {
         return cache.get(cacheKey)
@@ -148,8 +155,8 @@ export async function getQrCodes(eventId: number) {
 
         const available = qrCodes.filter((i: any) => !i.claimed).length
         const claimed = qrCodes.filter((i: any) => i.claimed).length
-        if (available - claimed < 10) {
-            console.log('Running out of codes.. Requesting more.')
+        if (available - claimed < 20 && requestMoreCodesIfEmpty) {
+            console.log('Requesting more qr codes.', 'Total', qrCodes.length, 'Available', available)
             requestMoreCodes(eventId)
         }
 
@@ -173,7 +180,7 @@ export async function requestMoreCodes(eventId: number) {
         },
         body: JSON.stringify({
             event_id: eventId,
-            requested_codes: 100,
+            requested_codes: 200,
             secret_code: APP_CONFIG.POAP_TEST_EVENT_SECRET, // TODO: Need to find a better way to handle event secrets
             redeem_type: "qr_code"
         })

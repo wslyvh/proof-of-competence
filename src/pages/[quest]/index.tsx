@@ -12,9 +12,11 @@ import TaskCard from "components/task"
 import { getQuestNames, getQuests } from "services/quests"
 import { attestScore } from "services/attestation"
 import Poap from "components/rewards/poap"
+import { getRewardStats } from "services/poap"
 
 interface Props {
   quest: Quest
+  rewardsAvailable: boolean
 }
 
 interface Params extends ParsedUrlQuery {
@@ -116,7 +118,7 @@ export default function QuestPage(props: Props) {
                   bg={bgButton} color={colorButton} colorScheme={DEFAULT_COLOR_SCHEME} 
                   onClick={attest}>Attest (rinkeby)</Button>
               }
-              {quest.reward === 'poap' && <Poap quest={quest} />}
+              {quest.reward === 'poap' && <Poap quest={quest} rewardsAvailable={props.rewardsAvailable} />}
           </VStack>
       </Center>
 
@@ -161,9 +163,16 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (context) => 
     }
   }
   
+  let rewardsAvailable = false
+  if (quest.reward === 'poap' && quest.params) {
+    const stats = await getRewardStats(quest.params['eventId'] as number)
+    rewardsAvailable = stats.available > 0
+  }
+
   return {
     props: {
-      quest
+      quest,
+      rewardsAvailable
     },
     revalidate: DEFAULT_REVALIDATE_PERIOD
   }
