@@ -163,11 +163,11 @@ export const getStaticProps: GetStaticProps<Props, Params> = async (context) => 
     }
   }
   
-  let rewardsAvailable = false
-  if (quest.reward === 'poap' && quest.params) {
-    const stats = await getRewardStats(quest.params['eventId'] as number)
-    rewardsAvailable = stats.available > 0
-  }
+  let rewardsAvailable = true
+  // if (quest.reward === 'poap' && quest.params) {
+  //   const stats = await getRewardStats(quest.params['eventId'] as number)
+  //   rewardsAvailable = stats.available > 0
+  // }
 
   return {
     props: {
