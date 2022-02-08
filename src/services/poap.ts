@@ -155,7 +155,7 @@ export async function getQrCodes(eventId: number, requestMoreCodesIfEmpty: boole
 
         const available = qrCodes.filter((i: any) => !i.claimed).length
         const claimed = qrCodes.filter((i: any) => i.claimed).length
-        if (available - claimed < 20 && requestMoreCodesIfEmpty) {
+        if (available - claimed < 100 && requestMoreCodesIfEmpty) {
             console.log('Requesting more qr codes.', 'Total', qrCodes.length, 'Available', available)
             requestMoreCodes(eventId)
         }
@@ -180,7 +180,7 @@ export async function requestMoreCodes(eventId: number) {
         },
         body: JSON.stringify({
             event_id: eventId,
-            requested_codes: 200,
+            requested_codes: 500,
             secret_code: APP_CONFIG.POAP_TEST_EVENT_SECRET, // TODO: Need to find a better way to handle event secrets
             redeem_type: "qr_code"
         })
