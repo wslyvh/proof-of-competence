@@ -155,7 +155,7 @@ export async function getQrCodes(eventId: number, requestMoreCodesIfEmpty: boole
 
         const available = qrCodes.filter((i: any) => !i.claimed).length
         const claimed = qrCodes.filter((i: any) => i.claimed).length
-        if (available - claimed < 100 && requestMoreCodesIfEmpty) {
+        if (available - claimed < 500 && requestMoreCodesIfEmpty) {
             console.log('Requesting more qr codes.', 'Total', qrCodes.length, 'Available', available)
             requestMoreCodes(eventId)
         }
