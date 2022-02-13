@@ -27,6 +27,12 @@
             "description": "Register yourself and get vouched by an existing member of the PoH community at https://www.proofofhumanity.id/",
             "points": 200,
             "verifier": "poh-registered"
+        },
+        {
+            "name": "Self.ID",
+            "description": "Create a Self.ID profile at https://self.id/",
+            "points": 200,
+            "verifier": "selfid-profile"
         }
     ]
 }
