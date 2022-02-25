@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Flex, Tooltip, useColorModeValue, useToast } from '@chakra-ui/react'
 import { DEFAULT_COLOR_SCHEME } from 'utils/constants'
 import { useWeb3React } from '@web3-react/core'
