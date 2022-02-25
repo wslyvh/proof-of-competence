@@ -14,7 +14,7 @@ export interface Task {
     name: string
     description: string
     points: number
-    verifier: Verifier // | Array<Verifier>
+    verifier: Verifier | Array<Verifier>
     // params: { [key: string]: string | boolean | number | Array<string> }
 }
 

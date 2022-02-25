@@ -17,11 +17,23 @@ export async function verifyQuestScore(quest: Quest, address: string) {
 }
 
 export async function verifyScore(task: Task, address?: string | null) {
-  console.log('VERIFYING', task.verifier.id)
-  const module = await import(`verifiers/${task.verifier.id}`)
-  const result: boolean | number = await module.verify(task, task.verifier, address)
+  if (!address) return false
 
-  return result
+  if (!Array.isArray(task.verifier)) {
+    const module = await import(`verifiers/${task.verifier.id}`)
+    const result: boolean | number = await module.verify(task, task.verifier, address)
+    
+    return result
+  }
+
+  const results = await Promise.all(task.verifier.map(async i => {
+    const module = await import(`verifiers/${i.id}`)
+    const result: boolean | number = await module.verify(task, i, address)
+
+    return typeof result === 'number' ? result > 0 : result
+  }))
+
+  return results.some(i => i)
 }
 
 export async function allowMint(quest: Quest, address: string) {

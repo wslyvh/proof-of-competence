@@ -14,7 +14,7 @@
             }
         },
         {
-            "name": "The minter",
+            "name": "Hold the Devs for Revolution NFT",
             "description": "Every member will receive 400 tokens for holding the NFT at the time of the snapshot.",
             "points": 400,
             "verifier": {
@@ -27,40 +27,37 @@
             }
         },
         {
-            "name": "The collector",
-            "description": "If a member holds a POAP from our Developer DAO town halls before Season 0, they will receive an additional 359* tokens. Please note that this score isn't properly calculated at the moment. You'll get 359 points for being a collector -OR- a DAOplomat.",
-            "points": 0,
-            "verifier": {
-                "id": "has-poap-ids",
-                "params": {
-                    "ids": [
-                        9944,
-                        10630,
-                        12096,
-                        12824,
-                        13024,
-                        13609,
-                        15428,
-                        17539,
-                        22255
-                    ]
+            "name": "Pre-season 0 POAP or pre-season 0 snapshot vote",
+            "description": "If a member holds a POAP from our Developer DAO town halls before Season 0 OR voted on either of our first two snapshot proposals, they will receive an additional 359* tokens.",
+            "points": 359,
+            "verifier": [
+                {
+                    "id": "has-poap-ids",
+                    "params": {
+                        "ids": [
+                            9944,
+                            10630,
+                            12096,
+                            12824,
+                            13024,
+                            13609,
+                            15428,
+                            17539,
+                            22255
+                        ]
+                    }
+                },
+                {
+                    "id": "snapshot-voted-on",
+                    "params": {
+                        "space": "devdao.eth",
+                        "propsals": [
+                            "QmdZQD8h28PiWwwsdJo5mD2DBdC7BvYzrktmbsMoP4AcP6",
+                            "0x52fc76fe5865cf038b89b8c6ef78b6e691c0ab9c2b1228b84b0813b7832ce369"
+                        ]
+                    }
                 }
-            }
-        },
-        {
-            "name": "The DAOplomat ",
-            "description": "If a member voted on either of our first two snapshot proposals, they will receive an additional 359* tokens. Please note that this score isn't properly calculated at the moment. You'll get 359 points for being a collector -OR- a DAOplomat.",
-            "points": 0,
-            "verifier": {
-                "id": "snapshot-voted-on",
-                "params": {
-                    "space": "devdao.eth",
-                    "propsals": [
-                        "QmdZQD8h28PiWwwsdJo5mD2DBdC7BvYzrktmbsMoP4AcP6",
-                        "0x52fc76fe5865cf038b89b8c6ef78b6e691c0ab9c2b1228b84b0813b7832ce369"
-                    ]
-                }
-            }
+            ]
         }
     ]
 }
