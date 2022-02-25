@@ -15,19 +15,23 @@ export default function Poap(props: Props) {
     const toast = useToast()
     const bgButton = useColorModeValue('teal.700', 'teal.700')
     const colorButton = useColorModeValue('grey.900', 'grey.100')
+    const [eligible, setEligible] = useState(false)
     const [rewardsAvailable, setRewardsAvailable] = useState(false)
 
     useEffect(() => {
-        async function asyncEffect() { 
+        async function asyncEffect() {
             if (!web3.account) return
 
             const eligible = await allowMint(props.quest, web3.account)
-            // if (props.quest.reward === 'poap' && props.quest.params) {
-            //     const response = await fetch(`/api/quests/${props.quest.id}/stats`)
-            //     const stats = await response.json()
-            //     setRewardsAvailable(stats.data.available > 0)
-            // }
-            setRewardsAvailable(eligible)
+            setEligible(eligible)
+
+            if (eligible) {
+                if (props.quest.reward === 'poap' && props.quest.params) {
+                    const response = await fetch(`/api/quests/${props.quest.id}/stats`)
+                    const stats = await response.json()
+                    setRewardsAvailable(stats.data.available > 0)
+                }
+            }
         }
 
         asyncEffect()
@@ -58,7 +62,12 @@ export default function Poap(props: Props) {
             <Button bg={bgButton} color={colorButton} colorScheme={DEFAULT_COLOR_SCHEME} mr={!rewardsAvailable ? 2 : 0}
                 disabled={!rewardsAvailable || !web3.account} onClick={claim}>Claim POAP</Button>
 
-            {!rewardsAvailable &&
+            {!eligible &&
+                <Tooltip label={`You're not eligible to claim this reward (yet).`}>
+                    <InfoOutlineIcon />
+                </Tooltip>
+            }
+            {eligible && !rewardsAvailable &&
                 <Tooltip label='No POAPs left for this quest'>
                     <InfoOutlineIcon />
                 </Tooltip>
