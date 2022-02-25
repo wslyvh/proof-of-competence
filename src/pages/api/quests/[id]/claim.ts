@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { mintToken } from 'services/poap'
 import { getQuests } from 'services/quests'
 import { ApiResponseData } from 'types'
-import { verifyQuestScore } from 'utils/verify'
+import { allowMint } from 'utils/verify'
 import { tryGetValidAddress } from 'utils/web3'
 
 type RequestBody = {
@@ -43,9 +43,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         return
     }
 
-    const maxScore = quest.tasks.map(i => i.points).reduce((acc, i) => acc + i, 0)
-    const score = await verifyQuestScore(quest, address)
-    if (score < maxScore) {
+    const eligible = await allowMint(quest, address)
+    if (!eligible) {
         res.status(405).json({ code: 405, message: 'not eligible to claim a reward.' })
         return
     }
