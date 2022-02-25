@@ -4,7 +4,7 @@ import { Link, Text, useColorModeValue } from '@chakra-ui/react'
 import { useWeb3React } from '@web3-react/core'
 import  React, { useEffect, useState } from 'react'
 import { Task } from 'types'
-import { verifyScore } from 'utils/verify'
+import { getChainId, verifyScore } from 'utils/verify'
 import Linkify from 'react-linkify'
 import { getNetworkColor, getNetworkName } from 'utils/web3'
 
@@ -43,7 +43,7 @@ export default function TaskCard(props: Props) {
                     {task.name} ({task.points} points) 
                     {typeof result === 'boolean' && result === true && <Badge colorScheme="teal" ml={2} p={1}>completed</Badge>}
                     {typeof result === 'number' && result > 0 && <Badge colorScheme="teal" ml={2} p={1}>in progress</Badge>}
-                    {!result && <Badge colorScheme={getNetworkColor(task.verifier.chainId ?? 1)} ml={2} p={1} variant="outline">{getNetworkName(task.verifier.chainId ?? 1)}</Badge>}
+                    {!result && <Badge colorScheme={getNetworkColor(getChainId(task))} ml={2} p={1} variant="outline">{getNetworkName(getChainId(task))}</Badge>}
                 </Heading>
                 
                 <Text mt={2}>

@@ -22,7 +22,7 @@ export async function verifyScore(task: Task, address?: string | null) {
   if (!Array.isArray(task.verifier)) {
     const module = await import(`verifiers/${task.verifier.id}`)
     const result: boolean | number = await module.verify(task, task.verifier, address)
-    
+
     return result
   }
 
@@ -45,7 +45,15 @@ export async function allowMint(quest: Quest, address: string) {
     // max possible score
     minScore = quest.tasks.map(i => i.points).reduce((acc, i) => acc + i, 0)
   }
-  
+
   const score = await verifyQuestScore(quest, address)
   return score >= minScore
+}
+
+export function getChainId(task: Task): number {
+  if (!Array.isArray(task.verifier)) {
+    return task.verifier.chainId ?? 1
+  }
+
+  return task.verifier.map(i => i.chainId).find(i => !!i) ?? 1
 }
