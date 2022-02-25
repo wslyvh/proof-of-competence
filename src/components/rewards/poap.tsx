@@ -7,7 +7,6 @@ import { InfoOutlineIcon } from '@chakra-ui/icons'
 
 interface Props {
     quest: Quest
-    rewardsAvailable?: boolean
 }
 
 export default function Poap(props: Props) {
@@ -15,6 +14,8 @@ export default function Poap(props: Props) {
     const toast = useToast()
     const bgButton = useColorModeValue('teal.700', 'teal.700')
     const colorButton = useColorModeValue('grey.900', 'grey.100')
+    const [rewardsAvailable, setRewardsAvailable] = useState(false)
+
 
     async function claim() {
         if (web3.account) {
@@ -38,10 +39,10 @@ export default function Poap(props: Props) {
 
     return (
         <Flex alignItems='center'>
-            <Button bg={bgButton} color={colorButton} colorScheme={DEFAULT_COLOR_SCHEME} mr={!props.rewardsAvailable ? 2 : 0}
-                disabled={!props.rewardsAvailable || !web3.account} onClick={claim}>Claim POAP</Button>
+            <Button bg={bgButton} color={colorButton} colorScheme={DEFAULT_COLOR_SCHEME} mr={!rewardsAvailable ? 2 : 0}
+                disabled={!rewardsAvailable || !web3.account} onClick={claim}>Claim POAP</Button>
 
-            {!props.rewardsAvailable &&
+            {!rewardsAvailable &&
                 <Tooltip label='No POAPs left for this quest'>
                     <InfoOutlineIcon />
                 </Tooltip>

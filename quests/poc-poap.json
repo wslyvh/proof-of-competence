@@ -6,7 +6,8 @@
   "twitter": "wslyvh",
   "reward": "poap",
   "params": {
-    "eventId": 26372
+    "eventId": 26372,
+    "autoRequest": 1000
   },
   "tasks": [
     {

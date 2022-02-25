@@ -32,3 +32,20 @@ export async function saveAccessToken(token: string, expires: Date) {
         console.error(e)
     }
 }
+
+export async function getEventSecret(eventId: number): Promise<string | undefined> { 
+    try {
+        const records = await client('Events').select({
+            filterByFormula: `({event_id} = ${eventId})`,
+            maxRecords: 1
+        }).all()
+
+        return records.map(i => i.fields['event_secret'] as string).shift()
+    }
+    catch (e) {
+        console.log('Unable to get event secrets')
+        console.error(e)
+    }
+
+    return
+}

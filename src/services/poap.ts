@@ -1,6 +1,6 @@
 import { ApiResponse } from 'types'
 import { APP_CONFIG } from 'utils/config'
-import { saveAccessToken as saveAccessTokenToAirtable, tryGetAccessToken as tryGetAccessTokenFromAirtable } from './airtableCache'
+import { getEventSecret, saveAccessToken as saveAccessTokenToAirtable, tryGetAccessToken as tryGetAccessTokenFromAirtable } from './airtableCache'
 import { saveAccessToken as saveAccessTokenToFs, tryGetAccessToken as tryGetAccessTokenFromFs } from './fsCache'
 
 const cache = new Map()
@@ -61,13 +61,13 @@ export async function getAccessToken(): Promise<string | undefined> {
     }
 }
 
-export async function mintToken(eventId: number, address: string): Promise<ApiResponse> {
+export async function mintToken(eventId: number, address: string, autoRequest?: number): Promise<ApiResponse> {
     console.log('Minting POAP for', eventId, address)
 
     // 1. Get an available QR codes. POAP API is rate-limited, so saving available codes in (short-term) API cache
     const availableCodesCacheKey = `poap.service:mintToken.availableCodes-${eventId}`
     if (!cache.has(availableCodesCacheKey)) {
-        const qrCodes = await getQrCodes(eventId, true)
+        const qrCodes = await getQrCodes(eventId, autoRequest)
         const availableCodes = qrCodes.filter((i: any) => !i.claimed).map((i: any) => i.qr_hash)
         cache.set(availableCodesCacheKey, availableCodes)
     }
@@ -119,7 +119,7 @@ export async function mintToken(eventId: number, address: string): Promise<ApiRe
 export async function getRewardStats(eventId: number) {
     console.log('Get rewards stats', eventId)
 
-    const qrCodes = await getQrCodes(eventId, false)
+    const qrCodes = await getQrCodes(eventId)
     const claimed = qrCodes.filter((i: any) => i.claimed).length
     const available = qrCodes.filter((i: any) => !i.claimed).length
 
@@ -130,11 +130,14 @@ export async function getRewardStats(eventId: number) {
     }
 }
 
-export async function getQrCodes(eventId: number, requestMoreCodesIfEmpty: boolean = false) {
+export async function getQrCodes(eventId: number, autoRequest?: number) {
     const cacheKey = `poap.service:getQrCodes-${eventId}`
     if (cache.has(cacheKey)) {
         return cache.get(cacheKey)
     }
+
+    const secret = await getEventSecret(eventId)
+    if (!secret) return
 
     try {
         const accessToken = await getAccessToken()
@@ -146,7 +149,7 @@ export async function getQrCodes(eventId: number, requestMoreCodesIfEmpty: boole
                 'Authorization': `Bearer ${accessToken}`
             },
             body: JSON.stringify({
-                secret_code: APP_CONFIG.POAP_TEST_EVENT_SECRET, // TODO: Need to find a better way to handle event secrets
+                secret_code: secret,
             })
         })
 
@@ -155,9 +158,9 @@ export async function getQrCodes(eventId: number, requestMoreCodesIfEmpty: boole
 
         const available = qrCodes.filter((i: any) => !i.claimed).length
         const claimed = qrCodes.filter((i: any) => i.claimed).length
-        if (available - claimed < 500 && requestMoreCodesIfEmpty) {
+        if (!!autoRequest && available - claimed < 500) {
             console.log('Requesting more qr codes.', 'Total', qrCodes.length, 'Available', available)
-            requestMoreCodes(eventId)
+            requestMoreCodes(eventId, autoRequest)
         }
 
         return cache.get(cacheKey)
@@ -168,7 +171,10 @@ export async function getQrCodes(eventId: number, requestMoreCodesIfEmpty: boole
     }
 }
 
-export async function requestMoreCodes(eventId: number) {
+export async function requestMoreCodes(eventId: number, amount: number) {
+    const secret = await getEventSecret(eventId)
+    if (!secret) return
+
     const accessToken = getAccessToken()
 
     const redeemResponse = await fetch('https://api.poap.tech/redeem-requests', {
@@ -180,8 +186,8 @@ export async function requestMoreCodes(eventId: number) {
         },
         body: JSON.stringify({
             event_id: eventId,
-            requested_codes: 500,
-            secret_code: APP_CONFIG.POAP_TEST_EVENT_SECRET, // TODO: Need to find a better way to handle event secrets
+            requested_codes: amount,
+            secret_code: secret,
             redeem_type: "qr_code"
         })
     })

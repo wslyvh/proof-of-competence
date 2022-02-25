@@ -52,7 +52,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   
     if (quest.reward === 'poap' && quest.params) {
         try { 
-            const mint = await mintToken(quest.params['eventId'] as number, address)
+            const eventId = quest.params['eventId'] as number
+            const autoRequest = quest.params['autoRequest'] as number
+            const mint = await mintToken(eventId, address, autoRequest)
             if (mint.success) {
                 res.status(200).json({ code: 200, message: mint.message })
                 return
