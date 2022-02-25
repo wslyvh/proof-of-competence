@@ -43,7 +43,7 @@ export default function TaskCard(props: Props) {
                     {task.name} ({task.points} points) 
                     {typeof result === 'boolean' && result === true && <Badge colorScheme="teal" ml={2} p={1}>completed</Badge>}
                     {typeof result === 'number' && result > 0 && <Badge colorScheme="teal" ml={2} p={1}>in progress</Badge>}
-                    {!result && <Badge colorScheme={getNetworkColor(task.chainId ?? 1)} ml={2} p={1} variant="outline">{getNetworkName(task.chainId ?? 1)}</Badge>}
+                    {!result && <Badge colorScheme={getNetworkColor(task.verifier.chainId ?? 1)} ml={2} p={1} variant="outline">{getNetworkName(task.verifier.chainId ?? 1)}</Badge>}
                 </Heading>
                 
                 <Text mt={2}>

@@ -1,13 +1,13 @@
-import { Task } from "types"
+import { Task, Verifier } from "types"
 import { APP_CONFIG } from "utils/config"
 
-export async function verify(task: Task, address: string): Promise<boolean | number>
+export async function verify(task: Task, verifier: Verifier, address: string): Promise<boolean | number>
 {
     if (!address) return false
-    if (!Array.isArray(task.params['addresses'])) return false
+    if (!Array.isArray(verifier.params['addresses'])) return false
 
     try { 
-        const nftContractAddresses = task.params['addresses']
+        const nftContractAddresses = verifier.params['addresses']
         const response = await fetch(`https://eth-mainnet.g.alchemy.com/${APP_CONFIG.ALCHEMY_API_KEY}/v1/getNFTs/?owner=${address}&contractAddresses=${nftContractAddresses.join(',')}`)
         const data = await response.json()
 

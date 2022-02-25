@@ -1,11 +1,11 @@
-import { Task } from 'types'
+import { Task, Verifier } from 'types'
 
-export async function verify(task: Task, address: string): Promise<boolean | number> {
+export async function verify(task: Task, verifier: Verifier, address: string): Promise<boolean | number> {
     if (!address) return false
-    if (!task.params['space']) return false
+    if (!verifier.params['space']) return false
 
     try {
-        const space = task.params['space'] as string
+        const space = verifier.params['space'] as string
         const response = await fetch('https://hub.snapshot.org/graphql', {
             method: 'POST',
             headers: {
@@ -37,7 +37,7 @@ export async function verify(task: Task, address: string): Promise<boolean | num
         const votes = Array.from(data.data.votes)
         if (votes.length === 0) return false
 
-        const proposals = Array.isArray(task.params['propsals']) ? Array.from(task.params['propsals']) : []
+        const proposals = Array.isArray(verifier.params['propsals']) ? Array.from(verifier.params['propsals']) : []
         if (proposals.length > 0) {
             return votes.map((i: any) => i.proposal.id).filter(i => proposals.includes(i)).length * task.points
         }

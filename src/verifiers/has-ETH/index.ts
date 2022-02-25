@@ -13,20 +13,20 @@
 //     "chainId":137
 //   }  
 
-import { Task } from "types"
+import { Task, Verifier } from "types"
 import { ethers } from "ethers"
 import { AlchemyProvider } from '@ethersproject/providers'
 
-export async function verify(task: Task, address: string): Promise<boolean | number>
+export async function verify(task: Task, verifier: Verifier, address: string): Promise<boolean | number>
 {
     if (!address) return false
     let amount:number = 0
-    if (task.params){
-        if('amount' in task.params) amount = Number(task.params['amount'])
+    if (verifier.params){
+        if('amount' in verifier.params) amount = Number(verifier.params['amount'])
     }
     
     try { 
-        const provider = new AlchemyProvider(task.chainId || 1, process.env.NEXT_PUBLIC_ALCHEMY_API_KEY)
+        const provider = new AlchemyProvider(verifier.chainId || 1, process.env.NEXT_PUBLIC_ALCHEMY_API_KEY)
         const balance= await provider.getBalance(address)
         if (Number(ethers.utils.formatEther(balance)) > amount)  
             return true

@@ -14,33 +14,43 @@
       "name": "Have a wallet address",
       "description": "You need a wallet address to enter Web3 universe.",
       "points": 100,
-      "verifier": "active-address"
+      "verifier": {
+        "id": "active-address"
+      }
     },
     {
       "name": "ENS",
       "description": "Register your unique ENS name at https://app.ens.domains/.",
       "points": 100,
-      "verifier": "ens-reverse-lookup"
+      "verifier": {
+        "id": "ens-reverse-lookup"
+      }
     },
     {
       "name": "BrightID",
       "description": "BrightID https://www.brightid.org/ is a social identity network that allows you to prove that you're only using one account.",
       "points": 100,
-      "verifier": "brightid-verification"
+      "verifier": {
+        "id": "brightid-verification"
+      }
     },
     {
       "name": "Proof of Humanity",
       "description": "Register yourself and get vouched by an existing member of the PoH community at https://www.proofofhumanity.id/",
       "points": 100,
-      "verifier": "poh-registered"
+      "verifier": {
+        "id": "poh-registered"
+      }
     },
     {
       "name": "Self.ID",
       "description": "Create a Self.ID profile at https://self.id/ and connect at least 1 social connection to your profile.",
       "points": 100,
-      "verifier": "selfid-profile",
-      "params": {
-        "connections": 1
+      "verifier": {
+        "id": "selfid-profile",
+        "params": {
+          "connections": 1
+        }
       }
     }
   ]

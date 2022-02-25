@@ -17,8 +17,9 @@ export async function verifyQuestScore(quest: Quest, address: string) {
 }
 
 export async function verifyScore(task: Task, address?: string | null) {
-  const module = await import(`verifiers/${task.verifier}`)
-  const result: boolean | number = await module.verify(task, address)
+  console.log('VERIFYING', task.verifier.id)
+  const module = await import(`verifiers/${task.verifier.id}`)
+  const result: boolean | number = await module.verify(task, task.verifier, address)
 
   return result
 }

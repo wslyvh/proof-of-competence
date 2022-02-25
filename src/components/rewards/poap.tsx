@@ -4,6 +4,7 @@ import { DEFAULT_COLOR_SCHEME } from 'utils/constants'
 import { useWeb3React } from '@web3-react/core'
 import { Quest } from 'types'
 import { InfoOutlineIcon } from '@chakra-ui/icons'
+import { allowMint } from 'utils/verify'
 
 interface Props {
     quest: Quest
@@ -16,6 +17,21 @@ export default function Poap(props: Props) {
     const colorButton = useColorModeValue('grey.900', 'grey.100')
     const [rewardsAvailable, setRewardsAvailable] = useState(false)
 
+    useEffect(() => {
+        async function asyncEffect() { 
+            if (!web3.account) return
+
+            const eligible = await allowMint(props.quest, web3.account)
+            // if (props.quest.reward === 'poap' && props.quest.params) {
+            //     const response = await fetch(`/api/quests/${props.quest.id}/stats`)
+            //     const stats = await response.json()
+            //     setRewardsAvailable(stats.data.available > 0)
+            // }
+            setRewardsAvailable(eligible)
+        }
+
+        asyncEffect()
+    }, [props.quest, web3.account])
 
     async function claim() {
         if (web3.account) {

@@ -9,48 +9,60 @@
             "name": "Proof of Humanity",
             "description": "Register yourself and get vouched by an existing member of the PoH community at https://www.proofofhumanity.id/",
             "points": 100,
-            "verifier": "poh-registered"
+            "verifier": {
+                "id": "poh-registered"
+            }
         },
         {
             "name": "Vouch",
             "description": "Vouch for people and score points for each registered vouchee.",
             "points": 100,
-            "verifier": "poh-vouchees"
+            "verifier": {
+                "id": "poh-vouchees"
+            }
         },
         {
             "name": "Governance",
             "description": "Participate in PoH governance using Snapshot and score points for each vote",
             "points": 50,
-            "verifier": "snapshot-votes",
-            "params": {
-                "space": "poh.eth"
+            "verifier": {
+                "id": "snapshot-votes",
+                "params": {
+                    "space": "poh.eth"
+                }
             }
         },
         {
             "name": "Delegated",
             "description": "Trust someone to participate in governance for you.",
             "points": 200,
-            "verifier": "snapshot-delegated",
-            "params": {
-                "space": "poh.eth"
+            "verifier": {
+                "id": "snapshot-delegated",
+                "params": {
+                    "space": "poh.eth"
+                }
             }
         },
         {
             "name": "Delegate",
             "description": "Increase your voting power by becoming a trusted delegate.",
             "points": 100,
-            "verifier": "snapshot-delegates",
-            "params": {
-                "space": "poh.eth"
+            "verifier": {
+                "id": "snapshot-delegates",
+                "params": {
+                    "space": "poh.eth"
+                }
             }
         },
         {
             "name": "Author",
             "description": "Authored a proposal on Snapshot.",
             "points": 50,
-            "verifier": "snapshot-proposed",
-            "params": {
-                "space": "poh.eth"
+            "verifier": {
+                "id": "snapshot-proposed",
+                "params": {
+                    "space": "poh.eth"
+                }
             }
         }
     ]

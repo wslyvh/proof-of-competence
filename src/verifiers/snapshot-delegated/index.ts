@@ -1,11 +1,11 @@
-import { Task } from 'types'
+import { Task, Verifier } from 'types'
 
-export async function verify(task: Task, address: string): Promise<boolean | number> {
+export async function verify(task: Task, verifier: Verifier, address: string): Promise<boolean | number> {
     if (!address) return false
-    if (!task.params['space']) return false
+    if (!verifier.params['space']) return false
 
     try {
-        const space = task.params['space'] as string
+        const space = verifier.params['space'] as string
         const response = await fetch('https://api.thegraph.com/subgraphs/name/snapshot-labs/snapshot', {
             method: 'POST',
             headers: {

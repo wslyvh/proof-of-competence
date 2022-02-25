@@ -126,7 +126,7 @@ export default function QuestPage(props: Props) {
         <Heading as="h3" size='lg'>Tasks</Heading>
 
         {quest.tasks.map((task: Task, index: number) => {
-          return <TaskCard key={`${task.verifier}_${index}`} task={task} address={web3.account} />
+          return <TaskCard key={`${task.name}_${index}`} task={task} address={web3.account} />
         })}
         </VStack>
     </div>

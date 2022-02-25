@@ -9,82 +9,108 @@
       "name": "🔑 Create a Web3 wallet",
       "description": "Visit https://ethereum.org/wallets and install a wallet to start your Bankless journey.",
       "points": 100,
-      "verifier": "active-address"
+      "verifier": {
+        "id": "active-address"
+      }
     },
     {
       "name": "🏴 OG Bankless Member",
       "description": "Bankless https://newsletter.banklesshq.com subscribers who own a Bankless POAP from 2020 or 2021.",
       "points": 400,
-      "verifier": "has-poap-ids",
-      "params": {
-        "ids": ["204", "885"]
+      "verifier": {
+        "id": "has-poap-ids",
+        "params": {
+          "ids": [
+            "204",
+            "885"
+          ]
+        }
       }
     },
     {
       "name": "🌐 Join Bankless DAO and vote on Snapshot",
       "description": "Participate in (off-chain) governance using Snapshot and vote on min. 1 proposal.",
       "points": 400,
-      "verifier": "snapshot-voted-on",
-      "params": {
-        "space": "banklessvault.eth"
+      "verifier": {
+        "id": "snapshot-voted-on",
+        "params": {
+          "space": "banklessvault.eth"
+        }
       }
     },
     {
       "name": "📚 Bankless Learner",
       "description": "Complete lessons on Bankless Academy https://banklessacademy.com and collect POAPs as Proof of Learning.",
       "points": 400,
-      "verifier": "has-poap-ids",
-      "params": {
-        "ids": ["4652", "4783", "16394", "21670"]
+      "verifier": {
+        "id": "has-poap-ids",
+        "params": {
+          "ids": [
+            "4652",
+            "4783",
+            "16394",
+            "21670"
+          ]
+        }
       }
     },
     {
       "name": "✌️ Own a DAO Punk",
       "description": "Liberate yourself from corporation and join a DAO! For all DAO Punk NFT https://opensea.io/collection/daopunksnft owners.",
       "points": 400,
-      "verifier": "has-nft",
-      "params": {
-        "addresses": ["0x700f045de43fce6d2c25df0288b41669b7566bbe"]
+      "verifier": {
+        "id": "has-nft",
+        "params": {
+          "addresses": [
+            "0x700f045de43fce6d2c25df0288b41669b7566bbe"
+          ]
+        }
       }
     },
     {
       "name": "🗺 Own a Bankless Location",
       "description": "Own a Bankless Location NFT https://rarible.com/banklesslocations to own a piece of DAO culture.",
       "points": 400,
-      "verifier": "has-nft",
-      "params": {
-        "addresses": ["0x5864a2eef51cee5fdbee8bc4649e6d38a2ff5a97"]
+      "verifier": {
+        "id": "has-nft",
+        "params": {
+          "addresses": [
+            "0x5864a2eef51cee5fdbee8bc4649e6d38a2ff5a97"
+          ]
+        }
       }
     },
     {
       "name": "🎙 Listen to Crypto Sapiens",
       "description": "Join Crypto Sapiens https://linktr.ee/CryptoSapiensOfficial live events and receive a listener POAP.",
       "points": 100,
-      "verifier": "has-poap-ids",
-      "params": {
-        "ids": [
-          22277,
-          21276,
-          19255,
-          17058,
-          16149,
-          13953,
-          13153,
-          11003,
-          9625,
-          9623,
-          9583,
-          8849,
-          7029,
-          6701,
-          6183,
-          5757,
-          5400,
-          4640,
-          4193,
-          3827,
-          3549
-        ]
+      "verifier": {
+        "id": "has-poap-ids",
+        "params": {
+          "ids": [
+            22277,
+            21276,
+            19255,
+            17058,
+            16149,
+            13953,
+            13153,
+            11003,
+            9625,
+            9623,
+            9583,
+            8849,
+            7029,
+            6701,
+            6183,
+            5757,
+            5400,
+            4640,
+            4193,
+            3827,
+            3549
+          ]
+        }
       }
     }
   ]
