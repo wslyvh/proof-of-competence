@@ -18,9 +18,9 @@
         },
         {
             "name": "BrightID",
-            "description": "BrightID https://www.brightid.org/ is a social identity network that allows you to prove that you're only using one account. NOT ACTIVE YET",
+            "description": "BrightID https://www.brightid.org/ is a social identity network that allows you to prove that you're only using one account.",
             "points": 200,
-            "verifier": "test-always-false"
+            "verifier": "brightid-verification"
         },
         {
             "name": "Proof of Humanity",
