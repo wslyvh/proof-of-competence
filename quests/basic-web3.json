@@ -20,7 +20,7 @@
       "verifier": {
         "id": "has-ETH",
         "params": {
-          "amount": 0.1
+          "amount": 0.01
         }
       }
     },
