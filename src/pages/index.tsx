@@ -6,9 +6,9 @@ import NextLink from "next/link"
 import { getQuests } from "services/quests"
 import { Quest } from "types"
 import { DEFAULT_REVALIDATE_PERIOD, DESCRIPTION } from "utils/constants"
-import { APP_CONFIG } from 'utils/config'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { DEFAULT_TOPIC_QUEST } from 'utils/constants'
 
 interface Props {
   quests: Array<Quest>
@@ -19,10 +19,10 @@ export default function HomePage(props: Props) {
   const router = useRouter()
 
   useEffect(() => {
-    if (APP_CONFIG.TOPIC_QUEST) router.push(`/${APP_CONFIG.TOPIC_QUEST}`)
+    if (DEFAULT_TOPIC_QUEST) router.push(`/${DEFAULT_TOPIC_QUEST}`)
   }, [])
 
-  if ( APP_CONFIG.TOPIC_QUEST ) 
+  if ( DEFAULT_TOPIC_QUEST ) 
     return <p>Redirecting...</p>
 
   return <div>

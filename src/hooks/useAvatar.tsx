@@ -15,21 +15,21 @@ export function useAvatar() {
                 return
             }
 
-            const name = await web3.library?.lookupAddress(web3.account)
-            if (!name) {
+            // const name = await web3.library?.lookupAddress(web3.account)
+            // if (!name) {
                 setAvatar({
                     name: '',
                     url: makeBlockie(web3.account)
                 })
                 return
-            }
+            // }
         
-            const resolver = await web3.library?.getResolver(name)
-            const ensAvatar = await resolver?.getAvatar()
-            setAvatar({
-                name: name,
-                url: ensAvatar?.url ?? makeBlockie(web3.account),
-            })
+            // const resolver = await web3.library?.getResolver(name)
+            // const ensAvatar = await resolver?.getAvatar()
+            // setAvatar({
+            //     name: name,
+            //     url: ensAvatar?.url ?? makeBlockie(web3.account),
+            // })
         }
 
         getAvatar()

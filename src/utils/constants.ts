@@ -7,3 +7,5 @@ export const SOCIAL_HANDLE = '@proofofcompetence'
 export const DEFAULT_COLOR_SCHEME = 'teal'
 
 export const DEFAULT_REVALIDATE_PERIOD = 3600
+
+export const DEFAULT_TOPIC_QUEST = 'basic-web3'

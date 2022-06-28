@@ -68,6 +68,7 @@ export function getNetworkName(chainId: number) {
     if (!name || name === 'homestead') return 'mainnet'
     if (chainId === 10) name = 'optimistic'
     if (chainId === 42161) name = 'arbitrum'
+    if (chainId === 31337) name = 'localhost'
 
     return name
 }
@@ -154,7 +155,7 @@ export async function tryResolveName(name: string): Promise<string | undefined> 
             return resolved
         }
     }
-    catch (e) {
+    catch (e) {  //ENSCATCH
         console.log('Invalid ENS name', name)
     }
 }
