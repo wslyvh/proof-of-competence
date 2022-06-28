@@ -31,10 +31,11 @@ export default function Header() {
 
       <Box>
         <Account />
-
+{/* 
         <Button ml={4} onClick={toggleColorMode}>
           {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
         </Button>
+ */}
       </Box>
     </Flex>
   )
