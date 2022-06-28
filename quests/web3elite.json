@@ -1,0 +1,75 @@
+{
+  "name": "Web3 Elites 之旅",
+  "version": 1,
+  "description": "使用 Polygon / Arbitrum / Optimism，使用跨链、NFT等功能。",
+  "tasks": [
+    {
+      "name": "Have a wallet address",
+      "description": "你需要拥有一个地址（以太坊生态地址）",
+      "points": 100,
+      "verifier": {
+        "id": "active-address"
+      }
+    },
+    {
+      "name": "Have MATIC in polygon wallet",
+      "description": "在 Polygon 链，拥有 MATIC",
+      "points": 100,
+      "verifier": {
+        "id": "has-ETH",
+        "chainId": 137,
+        "params": {
+          "amount": 0.1
+        }
+      }
+    },
+    {
+      "name": "Own * WE *  NFT on polygon",
+      "description": "按要求 Mint 一个 WE（Web3 Elites NFT）",
+      "points": 200,
+      "verifier": {
+        "id": "has-nft-ERC721",
+        "chainId": 137,
+        "params": {
+          "tokenAddress": "0xa850c6f46db0f04004194b9ac86282731e54e610"
+        }
+      }
+    },  
+    {
+      "name": "Own WETH on polygon",
+      "description": "在 Polygon 链拥有 WETH（ERC20）",
+      "points": 200,
+      "verifier": {
+        "id": "has-token-ERC20",
+        "chainId": 137,
+        "params": {
+          "tokenAddress": "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619"
+        }
+      }
+    },
+    {
+      "name": "Have ETH on Arbitrum",
+      "description": "在 Arbitrum (L2) 拥有 ETH，可通过 Multichain 跨链",
+      "points": 200,
+      "verifier": {
+        "id": "has-ETH",
+        "chainId": 42161,
+        "params": {
+          "amount": 0.001
+        }
+      }
+    },
+    {
+      "name": "Have ETH on Optimism",
+      "description": "在 Optimism (L2) 拥有 ETH，可通过 Multichain 跨链",
+      "points": 200,
+      "verifier": {
+        "id": "has-ETH",
+        "chainId": 10,
+        "params": {
+          "amount": 0.001
+        }
+      }
+    }
+  ]
+}
