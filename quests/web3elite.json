@@ -1,7 +1,7 @@
 {
   "name": "Web3 Elites 之旅",
   "version": 1,
-  "description": "使用 Polygon / Arbitrum / Optimism，使用跨链、NFT等功能。",
+  "description": "使用 Polygon / Arbitrum / Optimism, 使用跨链、NFT等功能。",
   "tasks": [
     {
       "name": "Have a wallet address",
@@ -25,7 +25,7 @@
     },
     {
       "name": "Own * WE *  NFT on polygon",
-      "description": "按要求 Mint 一个 WE（Web3 Elites NFT）",
+      "description": "按要求 Mint 一个 WE (Web3) Elites NFT",
       "points": 200,
       "verifier": {
         "id": "has-nft-ERC721",
@@ -37,7 +37,7 @@
     },  
     {
       "name": "Own WETH on polygon",
-      "description": "在 Polygon 链拥有 WETH（ERC20）",
+      "description": "在 Polygon 链拥有 WETH (ERC20)",
       "points": 200,
       "verifier": {
         "id": "has-token-ERC20",
@@ -49,7 +49,7 @@
     },
     {
       "name": "Have ETH on Arbitrum",
-      "description": "在 Arbitrum (L2) 拥有 ETH，可通过 Multichain 跨链",
+      "description": "在 Arbitrum (L2) 拥有 ETH, 可通过 Multichain 跨链",
       "points": 200,
       "verifier": {
         "id": "has-ETH",
@@ -61,7 +61,7 @@
     },
     {
       "name": "Have ETH on Optimism",
-      "description": "在 Optimism (L2) 拥有 ETH，可通过 Multichain 跨链",
+      "description": "在 Optimism (L2) 拥有 ETH, 可通过 Multichain 跨链",
       "points": 200,
       "verifier": {
         "id": "has-ETH",
