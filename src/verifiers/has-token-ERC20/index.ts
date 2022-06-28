@@ -17,6 +17,7 @@
 import { Task, Verifier } from "types"
 import { ethers } from "ethers"
 import { AlchemyProvider } from '@ethersproject/providers'
+import { APP_CONFIG } from 'utils/config'
 
 export async function verify(task: Task, verifier: Verifier, address: string): Promise<boolean | number> {
     if (!address || !verifier.params) return false
@@ -30,7 +31,7 @@ export async function verify(task: Task, verifier: Verifier, address: string): P
         amount = Number(verifier.params['amount'])
 
     try {
-        const provider = new AlchemyProvider(verifier.chainId || 1, process.env.NEXT_PUBLIC_ALCHEMY_API_KEY)
+        const provider = new AlchemyProvider(verifier.chainId || 1, APP_CONFIG.ALCHEMY_API_KEY)
         const contract = await new ethers.Contract(contractAddress, abi, provider)
         const balanceOf = await contract.balanceOf(address)
         if (balanceOf / 1e18 > amount)
@@ -43,11 +44,13 @@ export async function verify(task: Task, verifier: Verifier, address: string): P
     }
 }
 
-const abi =
-    [{
-        "constant": true,
-        "inputs": [{ "name": "who", "type": "address" }],
-        "name": "balanceOf",
-        "outputs": [{ "name": "", "type": "uint256" }],
-        "payable": false, "stateMutability": "view", "type": "function"
-    }]
+const abi =["function balanceOf(address owner) view returns (uint balance)"]
+
+// const abi =
+//     [{
+//         "constant": true,
+//         "inputs": [{ "name": "who", "type": "address" }],
+//         "name": "balanceOf",
+//         "outputs": [{ "name": "", "type": "uint256" }],
+//         "payable": false, "stateMutability": "view", "type": "function"
+//     }]
