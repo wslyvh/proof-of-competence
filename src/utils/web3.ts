@@ -27,8 +27,11 @@ export function getProvider(provider: ExternalProvider | JsonRpcFetchFunc) {
     return new Web3Provider(provider)
 }
 
+// export function formatAddress(value: string, length: number = 4) {
+//     return `${value.substring(0, length + 2)}...${value.substring(value.length - length)}`
+// }
 export function formatAddress(value: string, length: number = 4) {
-    return `${value.substring(0, length + 2)}...${value.substring(value.length - length)}`
+    return `${value.substring(0, 2)}...${value.substring(value.length - length)}`
 }
 
 export function getNetworkColor(chainId: number) {
