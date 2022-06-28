@@ -68,10 +68,10 @@ export function getNetworkColor(chainId: number) {
 
 export function getNetworkName(chainId: number) {
     let name = getNetwork(chainId)?.name
-    if (!name || name === 'homestead') return 'mainnet'
-    if (chainId === 10) name = 'optimistic'
-    if (chainId === 42161) name = 'arbitrum'
-    if (chainId === 31337) name = 'localhost'
+    if (!name || name === 'homestead') return 'Ethereum'
+    if (chainId === 10) name = 'Optimistic'
+    if (chainId === 42161) name = 'Arbitrum'
+    if (chainId === 31337) name = 'Localhost'
 
     return name
 }
