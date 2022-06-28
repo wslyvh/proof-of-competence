@@ -1,6 +1,7 @@
 # Changes
 
 - if `NEXT_PUBLIC_TOPIC_QUEST='...'` exists in `.env`, redirect to the quest. And add a list in the header. 
+- remove ENS domain entirely, since we want to support more chains instead of ENS.
 
 # Proof of Competence
 

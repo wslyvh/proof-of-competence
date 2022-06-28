@@ -8,7 +8,7 @@ import { APP_CONFIG } from "./config";
 import { ethers } from "ethers";
 
 export const injected = new InjectedConnector({
-    supportedChainIds: [1, 3, 4, 5, 10, 42, 42161]
+    supportedChainIds: [1, 3, 4, 5, 10, 42, 137, 31337, 42161]
 })
 
 export const walletConnectConnector = new WalletConnectConnector({
@@ -49,6 +49,9 @@ export function getNetworkColor(chainId: number) {
             return 'red'
         }
         case 42: { // Kovan
+            return 'purple'
+        }
+        case 137:{ // polygon
             return 'purple'
         }
         case 42161: { // Arbitrum
