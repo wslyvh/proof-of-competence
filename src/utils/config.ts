@@ -8,4 +8,6 @@ export const APP_CONFIG = {
 
     POAP_CLIENT_ID: process.env.POAP_CLIENT_ID,
     POAP_CLIENT_SECRET: process.env.POAP_CLIENT_SECRET,
+
+    TOPIC_QUEST: process.env.NEXT_PUBLIC_TOPIC_QUEST,
 }

@@ -1,3 +1,7 @@
+# Changes
+
+- if `NEXT_PUBLIC_TOPIC_QUEST='...'` exists in `.env`, redirect to the quest.
+
 # Proof of Competence
 
 Proof of Competence (PoC) is an open, modular framework to create on-chain quests and on-boarding journeys into Web3. It uses a pluggable task system which can verify that on-chain actions have occurred. This allows to build up reputation or social (DAO) scores that proof an address is familiar with the specified technologies or protocols.
