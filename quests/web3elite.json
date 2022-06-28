@@ -25,7 +25,7 @@
     },
     {
       "name": "Own * WE *  NFT on polygon",
-      "description": "按要求 Mint 一个 WE (Web3) Elites NFT",
+      "description": "按要求 Mint 一个 WE (Web3 Elites) NFT",
       "points": 200,
       "verifier": {
         "id": "has-nft-ERC721",
