@@ -1,6 +1,6 @@
 # Changes
 
-- if `NEXT_PUBLIC_TOPIC_QUEST='...'` exists in `.env`, redirect to the quest.
+- if `NEXT_PUBLIC_TOPIC_QUEST='...'` exists in `.env`, redirect to the quest. And add a list in the header. 
 
 # Proof of Competence
 
