@@ -70,8 +70,9 @@ export function getNetworkName(chainId: number) {
     let name = getNetwork(chainId)?.name
     if (!name || name === 'homestead') return 'Ethereum'
     if (chainId === 10) name = 'Optimistic'
-    if (chainId === 42161) name = 'Arbitrum'
+    if (chainId === 137) name = 'Polygon'
     if (chainId === 31337) name = 'Localhost'
+    if (chainId === 42161) name = 'Arbitrum'
 
     return name
 }
