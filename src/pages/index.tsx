@@ -19,7 +19,7 @@ export default function HomePage(props: Props) {
   const router = useRouter()
 
   useEffect(() => {
-    if (DEFAULT_TOPIC_QUEST) router.push(`/${DEFAULT_TOPIC_QUEST}`)
+    if (DEFAULT_TOPIC_QUEST) router.replace(`/${DEFAULT_TOPIC_QUEST}`)
   }, [])
 
   if ( DEFAULT_TOPIC_QUEST ) 
