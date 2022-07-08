@@ -111,12 +111,17 @@ export default function QuestPage(props: Props) {
                 <StarIcon mr={2} />
                 <Text fontSize="xl">Score {score} / {maxScore}</Text>
               </Box>
+
+              {/* ethereum attestation service (EAS) on rinkeby */}
               {quest.reward === 'self-attest' && 
                 <Button disabled={web3.chainId !== 4}
                   bg={bgButton} color={colorButton} colorScheme={DEFAULT_COLOR_SCHEME} 
                   onClick={attest}>Attest (rinkeby)</Button>
               }
+
+              {/* POAP */}
               {quest.reward === 'poap' && <Poap quest={quest} />}
+
           </VStack>
       </Center>
 

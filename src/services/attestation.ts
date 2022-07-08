@@ -5,6 +5,11 @@ import { Quest } from 'types'
 
 const easAbi = require("./abis/EAS.json")
 const easAddress = '0xBf49E19254DF70328C6696135958C94CD6cd0430'
+// https://rinkeby.etherscan.io/address/0xBf49E19254DF70328C6696135958C94CD6cd0430#code
+
+// ethereum attestation service (EAS) https://eas.eth.link/
+// https://github.com/ethereum-attestation-service
+// https://eas.eth.link/EAS-Slides-v3.pdf
 
  // bytes32 quest, uint8 version, uint256 score, bool completed
 const questUuid = '0x13db044bc5e4c02836b7c6796c90e79d5fb719d9e9bca649e0cb589985b27012'
