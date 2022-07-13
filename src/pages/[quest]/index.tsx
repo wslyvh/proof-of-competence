@@ -24,8 +24,11 @@ interface Params extends ParsedUrlQuery {
   quest: string
 }
 
+/*
+  [quest]/index.tsx
+  QuestPage  
+*/
 export default function QuestPage(props: Props) {
-  if (!props.quest) return null
 
   var quest = props.quest
   const maxScore = quest.tasks.map(i => i.points).reduce((acc, i) => acc + i, 0)
@@ -59,7 +62,9 @@ export default function QuestPage(props: Props) {
     }
 
     getScoreSum()
-  }, [address])
+  }, [quest, address])
+
+  if (!props.quest) return null
 
   return <>
       <Box as='section' p='8' borderRadius="xl" bg={bgBox}>

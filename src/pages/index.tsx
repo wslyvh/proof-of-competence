@@ -1,26 +1,30 @@
-import { VStack, Heading, Box, LinkOverlay, LinkBox } from "@chakra-ui/layout"
-import { Text } from '@chakra-ui/react'
+import React, { useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { GetStaticProps } from "next"
-import React from "react"
 import NextLink from "next/link"
+
+import { VStack, Heading, Box } from "@chakra-ui/layout"
+
+import QuestList from "components/QuestList"
 import { getQuests } from "services/quests"
 import { Quest } from "types"
-import { DEFAULT_REVALIDATE_PERIOD, DESCRIPTION } from "utils/constants"
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import { DEFAULT_TOPIC_QUEST } from 'utils/constants'
+import { DEFAULT_REVALIDATE_PERIOD, DESCRIPTION, DEFAULT_TOPIC_QUEST } from "utils/constants"
 
 interface Props {
   quests: Array<Quest>
 }
 
+/*
+  HomePage
+*/
 export default function HomePage(props: Props) {
+
 
   const router = useRouter()
 
   useEffect(() => {
     if (DEFAULT_TOPIC_QUEST) router.replace(`/${DEFAULT_TOPIC_QUEST}`)
-  }, [])
+  }, [router])
 
   if ( DEFAULT_TOPIC_QUEST ) 
     return <p>Redirecting...</p>
@@ -36,24 +40,16 @@ export default function HomePage(props: Props) {
       align="stretch">
       <Heading as="h3" size='lg'>Explore</Heading>
 
-      {props.quests.map((quest: Quest) => {
-        return (
-          <LinkBox key={quest.id} as='article' my={4} p={4} borderWidth="1px" borderRadius="lg" overflow="hidden">
-            <Heading fontSize='xl'>
-              <NextLink href={`/${quest.id}`} passHref>
-                <LinkOverlay>
-                  {quest.name}
-                </LinkOverlay>
-              </NextLink>
-            </Heading>
-            <Text mt={4}>{quest.description}</Text>
-          </LinkBox>
-        )})
-      }
+      {/* Quest list */}
+      <QuestList quests = {props.quests} />
+
     </VStack>
   </div>
 }
 
+/*
+  Next.js: getStaticProps
+*/
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const quests = getQuests()
   
