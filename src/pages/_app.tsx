@@ -1,8 +1,8 @@
 import type { AppProps } from 'next/app'
 import { ChakraProvider } from "@chakra-ui/react"
-import { Web3ReactProvider } from '@web3-react/core'
+// import { Web3ReactProvider } from '@web3-react/core'
 import { SEO } from 'components/seo'
-import { getProvider } from 'utils/web3'
+// import { getProvider } from 'utils/web3'
 import { Layout } from 'components/layout'
 import { WagmiConfig } from 'wagmi'
 import { client } from 'utils/wagmiclient'

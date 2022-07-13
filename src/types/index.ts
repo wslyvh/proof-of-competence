@@ -8,6 +8,7 @@ export interface Quest {
     tasks: Array<Task>
     reward?: 'none' | 'self-attest' | 'poap'
     params: { [key: string]: string | boolean | number | Array<string> }
+    // scoresum?: number
 }
 
 export interface Task {
@@ -16,6 +17,7 @@ export interface Task {
     points: number
     verifier: Verifier | Array<Verifier>
     // params: { [key: string]: string | boolean | number | Array<string> }
+    result?:boolean | number | undefined
 }
 
 export interface Verifier {

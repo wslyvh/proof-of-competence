@@ -27,10 +27,10 @@ interface Params extends ParsedUrlQuery {
 export default function QuestPage(props: Props) {
   if (!props.quest) return null
 
-  const quest = props.quest
+  var quest = props.quest
   const maxScore = quest.tasks.map(i => i.points).reduce((acc, i) => acc + i, 0)
 
-  const [score, setScore] = useState(0)
+  const [scoreSum, setScoreSum] = useState(0)
   const bgBox = useColorModeValue('gray.300', 'gray.700')
   const bgCenter = useColorModeValue(`${DEFAULT_COLOR_SCHEME}.500`, `${DEFAULT_COLOR_SCHEME}.200`)
   const colorCenter = useColorModeValue('white', 'black')
@@ -39,27 +39,29 @@ export default function QuestPage(props: Props) {
 
   useEffect(() => {
     async function getScoreSum() {
-      let score = 0
+
+      let scoresum = 0
       if (!quest) return
 
       await Promise.all(quest.tasks.map(async (task: Task) => {
         const result = await verifyScore(task, address)
+        task.result =  result
+
         if (result && typeof result === 'boolean') {
-          score += task.points
+          scoresum += task.points
         }
         if (result && typeof result === 'number') {
-          score += result
+          scoresum += result
         }
       }))
 
-      setScore(score)
+      setScoreSum(scoresum)      
     }
 
     getScoreSum()
-  }, [quest, address])
+  }, [address])
 
   return <>
-    <div>
       <Box as='section' p='8' borderRadius="xl" bg={bgBox}>
         <Heading as="h2" mb='4'>{quest.name}</Heading>
         <Text fontSize="xl">{quest.description}</Text>
@@ -67,25 +69,26 @@ export default function QuestPage(props: Props) {
       </Box>
 
       <Center as='section' py={4} my={8} borderRadius="xl" bg={bgCenter} color={colorCenter}>
-          <VStack as='section' align="stretch" alignItems='center'>
-              <Box display='flex' alignItems='center'>
-                <StarIcon mr={2} />
-                <Text fontSize="xl">Score {score} / {maxScore}</Text>
-              </Box>
+        <VStack as='section' align="stretch" alignItems='center'>
+          <Box display='flex' alignItems='center'>
+            <StarIcon mr={2} />
+            <Text fontSize="xl">Score {scoreSum} / {maxScore}</Text>
+          </Box>
 
-              {quest.reward === 'poap' && <Poap quest={quest} />}
-          </VStack>
+          {quest.reward === 'poap' && <Poap quest={quest} />}
+        </VStack>
       </Center>
 
       <VStack as='section' spacing={4} align="stretch">
         <Heading as="h3" size='lg'>Tasks</Heading>
 
         {quest.tasks.map((task: Task, index: number) => {
-          return <TaskCard key={`${task.name}_${index}`} task={task}  address={address}/>
+
+          return <TaskCard key={`${task.name}_${index}`} task={task}  />
+          
         })}
 
       </VStack>
-    </div>
   </>
 }
 
