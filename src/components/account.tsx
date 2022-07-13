@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Center, Link, useClipboard, Avatar, Flex, Box, Badge, Text } from '@chakra-ui/react'
+import { Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Center, useClipboard, Avatar, Flex, Box, Badge, Text } from '@chakra-ui/react'
 // import { useWeb3React } from '@web3-react/core'
 // import { useInitialConnect } from 'hooks/useInitialConnect'
 // import { injected, formatAddress, formatEtherscanLink, getNetworkName, getNetworkColor, walletConnectConnector } from 'utils/web3'
@@ -21,7 +21,13 @@ export function Account() {
 
   const { onCopy } = useClipboard(address ?? '')
 
-  const { connect, connectors, error, isLoading, pendingConnector } =  useConnect()
+  const { connect, connectors, error, isLoading, pendingConnector } =  useConnect({
+    onError(error) {
+      // console.log('Error', error)
+    },
+  }
+
+  )
   const { disconnect } = useDisconnect()
 
   const [mounted, setMounted] = useState(false)
@@ -34,7 +40,7 @@ export function Account() {
         <MenuButton
           as={Button}
           rightIcon={<ChevronDownIcon />}
-         colorScheme={DEFAULT_COLOR_SCHEME}>
+          colorScheme={DEFAULT_COLOR_SCHEME}>
           Connect
         </MenuButton>
         <MenuList>
@@ -49,9 +55,9 @@ export function Account() {
           }
         </MenuList>
 
-        <Text fontSize='xs' mt={4}>
+        {/* <Text fontSize='xs' mt={4}>
           {error && error.message }
-        </Text>
+        </Text> */}
       </Menu>
     }    
 

@@ -9,7 +9,8 @@ import { getChainId } from 'utils/verify'
 import { getNetworkColor, getNetworkName } from 'utils/web3'
 
 interface Props {
-    task: Task
+    task: Task,
+    address?: string | undefined
 }
 
 export default function TaskCard(props: Props) {
@@ -19,12 +20,18 @@ export default function TaskCard(props: Props) {
 
     return (
         <Flex>
+            {props.address?
             <Square size="100px" borderRadius="xl" bg={useColorModeValue('gray.100', 'gray.900')}>
                     {typeof result === 'boolean' && result && <CheckIcon color='teal' boxSize={6} />}
                     {typeof result === 'boolean' && !result && <SmallCloseIcon color='grey' boxSize={6} />}
                     {typeof result === 'number' && String(result)}
                     {task.result === undefined && ''}
             </Square>
+            :
+            <Square size="100px" borderRadius="xl" bg={useColorModeValue('gray.100', 'gray.900')}>
+                <SmallCloseIcon color='grey' boxSize={6} />
+            </Square>
+            }
 
             <Box flex="1" ml={4} padding={3}>
                 <Heading fontSize="xl">

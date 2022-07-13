@@ -8,7 +8,7 @@ import { allowMint } from 'utils/verify'
 
 interface Props {
     quest: Quest
-    address: string | undefined
+    address?: string | undefined
 }
 
 export default function Poap(props: Props) {

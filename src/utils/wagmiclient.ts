@@ -23,13 +23,13 @@ const connectors =   [
       qrcode: true,
     },
   }),
-  new InjectedConnector({
-    chains,
-    options: {
-      name: 'Injected',
-      shimDisconnect: true,
-    },
-  }),
+  // new InjectedConnector({
+  //   chains,
+  //   options: {
+  //     name: 'Injected',
+  //     shimDisconnect: true,
+  //   },
+  // }),
 ]
 
 export const client = createClient({

@@ -64,6 +64,9 @@ export default function QuestPage(props: Props) {
     getScoreSum()
   }, [quest, address])
 
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+
   if (!props.quest) return null
 
   return <>
@@ -80,7 +83,12 @@ export default function QuestPage(props: Props) {
             <Text fontSize="xl">Score {scoreSum} / {maxScore}</Text>
           </Box>
 
-          {quest.reward === 'poap' && <Poap quest={quest} address={address} />}
+          {quest.reward === 'poap' && (
+            (mounted && address)
+            ? <Poap quest={quest} address={address} />
+            : <Poap quest={quest}  />
+            )
+          }
         </VStack>
       </Center>
 
@@ -89,8 +97,11 @@ export default function QuestPage(props: Props) {
 
         {quest.tasks.map((task: Task, index: number) => {
 
-          return <TaskCard key={`${task.name}_${index}`} task={task}  />
-
+          return (
+            (mounted && address)
+            ?<TaskCard key={`${task.name}_${index}`} task={task}  address={address}/>
+            :<TaskCard key={`${task.name}_${index}`} task={task}  />
+          )
         })}
 
       </VStack>
