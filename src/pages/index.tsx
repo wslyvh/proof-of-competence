@@ -9,6 +9,7 @@ import QuestList from "components/QuestList"
 import { getQuests } from "services/quests"
 import { Quest } from "types"
 import { DEFAULT_REVALIDATE_PERIOD, DESCRIPTION, DEFAULT_TOPIC_QUEST } from "utils/constants"
+import { APP_CONFIG } from "utils/config"
 
 interface Props {
   quests: Array<Quest>
@@ -18,15 +19,15 @@ interface Props {
   HomePage
 */
 export default function HomePage(props: Props) {
-
+  const defautquest = APP_CONFIG.DEFAULT_TOPIC_QUEST
 
   const router = useRouter()
 
   useEffect(() => {
-    if (DEFAULT_TOPIC_QUEST) router.replace(`/${DEFAULT_TOPIC_QUEST}`)
+    if (defautquest) router.replace(`/${defautquest}`)
   }, [router])
 
-  if ( DEFAULT_TOPIC_QUEST ) 
+  if ( defautquest ) 
     return <p>Redirecting...</p>
 
   return <div>
