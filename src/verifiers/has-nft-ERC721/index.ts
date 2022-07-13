@@ -1,17 +1,20 @@
 // has-nft-ERC721/index.ts
 // Reminder:add in `.env.local`: NEXT_PUBLIC_ALCHEMY_API_KEY
 //
-// Usage: Task example for polygon(chainId 137). 
-// {
-//     "name": "has NFT on polygon",
-//     "description": "Own some ERC721 NFT on polygon.",
-//     "points": 100,
-//     "verifier": "has-nft-ERC721",
-//     "params": {
-//          "tokenAddress": "0x7eb476Cd0fE5578106A01DC2f2E392895C6BC0A5",
-//     },
-//     "chainId":137
-//   }  
+
+/*
+Usage: Task example for polygon(chainId 137). 
+{
+    "name": "has NFT on polygon",
+    "description": "Own some ERC721 NFT on polygon.",
+    "points": 100,
+    "verifier": "has-nft-ERC721",
+    "params": {
+         "tokenAddress": "0x7eb476Cd0fE5578106A01DC2f2E392895C6BC0A5",
+    },
+    "chainId":137
+}  
+*/
 
 import { Task, Verifier } from "types"
 import { ethers } from "ethers"

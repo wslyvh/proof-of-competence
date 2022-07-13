@@ -1,19 +1,20 @@
 // has-token-ERC20/index.ts
 // Reminder:add in `.env.local`: NEXT_PUBLIC_ALCHEMY_API_KEY
 //
-// Usage: Task example for polygon(chainId 137). You can omit amount if you just want to check > 0. 
-// {
-//     "name": "has WETH on polygon",
-//     "description": "Own some WETH (Wrapped ETH, ERC20) on polygon.",
-//     "points": 100,
-//     "verifier": "has-token-ERC20",
-//     "params": {
-//          "tokenAddress": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-//          "amount":0.1
-//     },
-//     "chainId":137
-//   }  
-
+/*
+Usage: Task example for polygon(chainId 137). You can omit amount if you just want to check > 0. 
+{
+    "name": "has WETH on polygon",
+    "description": "Own some WETH (Wrapped ETH, ERC20) on polygon.",
+    "points": 100,
+    "verifier": "has-token-ERC20",
+    "params": {
+         "tokenAddress": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
+         "amount":0.1
+    },
+    "chainId":137
+  }  
+*/
 import { Task, Verifier } from "types"
 import { ethers } from "ethers"
 import { AlchemyProvider } from '@ethersproject/providers'

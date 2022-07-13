@@ -75,7 +75,7 @@ export default function QuestPage(props: Props) {
             <Text fontSize="xl">Score {scoreSum} / {maxScore}</Text>
           </Box>
 
-          {quest.reward === 'poap' && <Poap quest={quest} />}
+          {quest.reward === 'poap' && <Poap quest={quest} address={address} />}
         </VStack>
       </Center>
 
@@ -85,7 +85,7 @@ export default function QuestPage(props: Props) {
         {quest.tasks.map((task: Task, index: number) => {
 
           return <TaskCard key={`${task.name}_${index}`} task={task}  />
-          
+
         })}
 
       </VStack>

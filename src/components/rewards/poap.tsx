@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Flex, Tooltip, useColorModeValue, useToast } from '@chakra-ui/react'
 import { DEFAULT_COLOR_SCHEME } from 'utils/constants'
-import { useWeb3React } from '@web3-react/core'
+// import { useWeb3React } from '@web3-react/core'
 import { Quest } from 'types'
 import { InfoOutlineIcon } from '@chakra-ui/icons'
 import { allowMint } from 'utils/verify'
 
 interface Props {
     quest: Quest
+    address: string | undefined
 }
 
 export default function Poap(props: Props) {
-    const web3 = useWeb3React()
+    // const web3 = useWeb3React()
     const toast = useToast()
     const bgButton = useColorModeValue('teal.700', 'teal.700')
     const colorButton = useColorModeValue('grey.900', 'grey.100')
@@ -20,9 +21,9 @@ export default function Poap(props: Props) {
 
     useEffect(() => {
         async function asyncEffect() {
-            if (!web3.account) return
+            if (!props.address) return
 
-            const eligible = await allowMint(props.quest, web3.account)
+            const eligible = await allowMint(props.quest, props.address)
             setEligible(eligible)
 
             if (eligible) {
@@ -35,15 +36,15 @@ export default function Poap(props: Props) {
         }
 
         asyncEffect()
-    }, [props.quest, web3.account])
+    }, [props.quest, props.address])
 
     async function claim() {
-        if (web3.account) {
+        if (props.address) {
             const response = await fetch(`/api/quests/${props.quest.id}/claim`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    account: web3.account
+                    account: props.address
                 }),
             })
 
@@ -60,7 +61,7 @@ export default function Poap(props: Props) {
     return (
         <Flex alignItems='center'>
             <Button bg={bgButton} color={colorButton} colorScheme={DEFAULT_COLOR_SCHEME} mr={!rewardsAvailable ? 2 : 0}
-                disabled={!rewardsAvailable || !web3.account} onClick={claim}>Claim POAP</Button>
+                disabled={!rewardsAvailable || !props.address} onClick={claim}>Claim POAP</Button>
 
             {!eligible &&
                 <Tooltip label={`You're not eligible to claim this reward (yet).`}>

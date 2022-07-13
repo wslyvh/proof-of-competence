@@ -1,12 +1,13 @@
-import { InjectedConnector } from "@web3-react/injected-connector";
+// import { InjectedConnector } from "@web3-react/injected-connector";
 import { ExternalProvider, getNetwork, JsonRpcFetchFunc } from "@ethersproject/providers"
 import { Web3Provider } from "@ethersproject/providers"
 import { BigNumberish } from "@ethersproject/bignumber";
 import { formatUnits } from "@ethersproject/units";
-import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+// import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import { APP_CONFIG } from "./config";
 import { ethers } from "ethers";
 
+/*
 export const injected = new InjectedConnector({
     supportedChainIds: [1, 3, 4, 5, 10, 42, 137, 31337, 42161]
 })
@@ -22,7 +23,7 @@ export const walletConnectConnector = new WalletConnectConnector({
         42161: `https://arbitrum-mainnet.infura.io/v3/${APP_CONFIG.INFURA_API_KEY}`,
     }
 })
-
+*/
 export function getProvider(provider: ExternalProvider | JsonRpcFetchFunc) {
     return new Web3Provider(provider)
 }
@@ -30,8 +31,9 @@ export function getProvider(provider: ExternalProvider | JsonRpcFetchFunc) {
 // export function formatAddress(value: string, length: number = 4) {
 //     return `${value.substring(0, length + 2)}...${value.substring(value.length - length)}`
 // }
-export function formatAddress(value: string, length: number = 4) {
-    return `${value.substring(0, 2)}...${value.substring(value.length - length)}`
+export function formatAddress(value: string | undefined, length: number = 4) {
+    if(!value) return ''
+    return `${value.substring(0, 2+length)}...${value.substring(value.length - length)}`
 }
 
 export function getNetworkColor(chainId: number) {

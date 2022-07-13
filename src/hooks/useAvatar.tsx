@@ -1,16 +1,16 @@
-import { useWeb3React } from "@web3-react/core"
+// import { useWeb3React } from "@web3-react/core"
 import makeBlockie from "ethereum-blockies-base64"
 import { useEffect, useState } from "react"
 
 const defaultValue = {name: '', url: ''}
 
-export function useAvatar() {
-    const web3 = useWeb3React()
+export function useAvatar(address:string | undefined) {
+    // const web3 = useWeb3React()
     const [avatar, setAvatar] = useState(defaultValue)
 
     useEffect(() => {
         async function getAvatar() { 
-            if (!web3.account) {
+            if (!address) {
                 setAvatar(defaultValue)
                 return
             }
@@ -19,7 +19,7 @@ export function useAvatar() {
             // if (!name) {
                 setAvatar({
                     name: '',
-                    url: makeBlockie(web3.account)
+                    url: makeBlockie(address)
                 })
                 return
             // }
@@ -33,7 +33,7 @@ export function useAvatar() {
         }
 
         getAvatar()
-    }, [web3.library, web3.account])
+    }, [address])
 
     return avatar
 }
