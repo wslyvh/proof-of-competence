@@ -8,7 +8,7 @@ import { VStack, Heading, Box } from "@chakra-ui/layout"
 import QuestList from "components/QuestList"
 import { getQuests } from "services/quests"
 import { Quest } from "types"
-import { DEFAULT_REVALIDATE_PERIOD, DESCRIPTION, DEFAULT_TOPIC_QUEST } from "utils/constants"
+import { DEFAULT_REVALIDATE_PERIOD, DESCRIPTION } from "utils/constants"
 import { APP_CONFIG } from "utils/config"
 
 interface Props {
@@ -25,7 +25,7 @@ export default function HomePage(props: Props) {
 
   useEffect(() => {
     if (defautquest) router.replace(`/${defautquest}`)
-  }, [router])
+  }, [router, defautquest])
 
   if ( defautquest ) 
     return <p>Redirecting...</p>

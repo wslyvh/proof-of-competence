@@ -4,7 +4,8 @@ import { Box, Flex, Button, useColorModeValue, Link, Spacer, useColorMode, Headi
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { TITLE } from 'utils/constants'
 import { Account } from './account'
-import { DEFAULT_TOPIC_QUEST } from 'utils/constants'
+// import { DEFAULT_TOPIC_QUEST } from 'utils/constants'
+import { APP_CONFIG } from 'utils/config'
 
 export default function Header() {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -20,7 +21,7 @@ export default function Header() {
 
       <Spacer />
       
-      { DEFAULT_TOPIC_QUEST
+      {  APP_CONFIG.DEFAULT_TOPIC_QUEST
       ? <LinkBox mx='4'>
           <NextLink href={'/lists'} passHref>
             <LinkOverlay>Quest Lists </LinkOverlay>
