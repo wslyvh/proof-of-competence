@@ -34,7 +34,7 @@ export default function QuestPage(props: Props) {
   const maxScore = quest.tasks.map(i => i.points).reduce((acc, i) => acc + i, 0)
 
   const [scoreSum, setScoreSum] = useState(0)
-  const bgBox = useColorModeValue('gray.300', 'gray.700')
+  const bgBox = useColorModeValue('gray.200', 'gray.700')
   const bgCenter = useColorModeValue(`${DEFAULT_COLOR_SCHEME}.500`, `${DEFAULT_COLOR_SCHEME}.200`)
   const colorCenter = useColorModeValue('white', 'black')
   

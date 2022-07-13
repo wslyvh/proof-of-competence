@@ -18,17 +18,19 @@ export default function TaskCard(props: Props) {
     const task = props.task
     const result = props.task.result
 
+    const bgColor = useColorModeValue('gray.100', 'gray.900')
+
     return (
         <Flex>
             {props.address?
-            <Square size="100px" borderRadius="xl" bg={useColorModeValue('gray.100', 'gray.900')}>
+            <Square size="100px" borderRadius="xl" bg={bgColor}>
                     {typeof result === 'boolean' && result && <CheckIcon color='teal' boxSize={6} />}
                     {typeof result === 'boolean' && !result && <SmallCloseIcon color='grey' boxSize={6} />}
                     {typeof result === 'number' && String(result)}
                     {task.result === undefined && ''}
             </Square>
             :
-            <Square size="100px" borderRadius="xl" bg={useColorModeValue('gray.100', 'gray.900')}>
+            <Square size="100px" borderRadius="xl" bg={bgColor}>
                 <SmallCloseIcon color='grey' boxSize={6} />
             </Square>
             }
