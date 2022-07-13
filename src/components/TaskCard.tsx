@@ -1,12 +1,14 @@
 import { CheckIcon, SmallCloseIcon } from '@chakra-ui/icons'
 import { Flex, Square, Box, Heading, Badge } from '@chakra-ui/layout'
 import { Link, Text, useColorModeValue } from '@chakra-ui/react'
-import { useWeb3React } from '@web3-react/core'
+// import { useWeb3React } from '@web3-react/core'
 import  React, { useEffect, useState } from 'react'
 import { Task } from 'types'
 import { getChainId, verifyScore } from 'utils/verify'
 import Linkify from 'react-linkify'
 import { getNetworkColor, getNetworkName } from 'utils/web3'
+
+// import { useAccount, useConnect, useEnsName, useNetwork, useDisconnect } from 'wagmi'
 
 interface Props {
     task: Task
@@ -15,18 +17,21 @@ interface Props {
 
 export default function TaskCard(props: Props) {
     const [result, setResult] = useState<boolean | number | undefined>()
-    const web3 = useWeb3React()
+    // const web3 = useWeb3React()
     const task = props.task
+    const address = props.address
 
+    // const { address } = useAccount()
+    
     useEffect(() => {
         async function verify() {
-            const result = await verifyScore(props.task, web3.account)
+            const result = await verifyScore(props.task, address)
 
             setResult(result)
         }
 
         verify()
-    }, [props.task, props.address, web3.account])
+    }, [props.task, address])
 
     return (
         <Flex>
